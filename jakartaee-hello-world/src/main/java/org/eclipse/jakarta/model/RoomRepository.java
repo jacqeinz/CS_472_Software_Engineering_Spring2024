@@ -28,7 +28,7 @@ public class RoomRepository {
 
     public List<Room> findAll() {
         logger.info("Getting all coffee");
-        return em.createQuery("SELECT c FROM Coffee c", Room.class).getResultList();
+        return em.createQuery("SELECT c FROM Room c", Room.class).getResultList();
     }
 
     public Optional<Room> findById(Long id) {
