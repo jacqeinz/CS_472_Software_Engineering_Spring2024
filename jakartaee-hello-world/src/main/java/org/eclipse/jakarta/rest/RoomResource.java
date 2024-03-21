@@ -40,7 +40,7 @@ public class RoomResource {
     @GET
     @Produces("application/json")
     public List<Room> findAll() {
-        logger.info("Getting all coffee");
+        logger.info("Getting all rooms");
         return roomRepository.findAll();
     }
 
@@ -52,7 +52,7 @@ public class RoomResource {
         try{
             return roomRepository.create(room);
         }catch (PersistenceException ex){
-            logger.info("Error creating coffee " + room.getName());
+            logger.info("Error creating room " + room.getName());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
@@ -60,7 +60,7 @@ public class RoomResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        logger.info("Deleting coffee by id " + id);
+        logger.info("Deleting room by id " + id);
         try{
         	roomRepository.delete(id);
         }catch (IllegalArgumentException e){
@@ -74,11 +74,11 @@ public class RoomResource {
     @Consumes("application/json")
     @Produces("application/json")
     public Room update(Room room) {
-        logger.info("Updating coffee " + room.getName());
+        logger.info("Updating room " + room.getName());
         try{
             return roomRepository.create(room);
         }catch (PersistenceException ex){
-            logger.info("Error updating coffee " + room.getName());
+            logger.info("Error updating room " + room.getName());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
