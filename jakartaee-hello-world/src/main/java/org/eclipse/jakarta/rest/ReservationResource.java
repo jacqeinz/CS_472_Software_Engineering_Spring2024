@@ -4,8 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.eclipse.jakarta.model.RoomRepository;
-import org.eclipse.jakarta.model.entity.Room;
+import org.eclipse.jakarta.model.ReservationRepository;
+import org.eclipse.jakarta.model.entity.Reservation;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -21,38 +21,38 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
 
-@Path("rooms")
-public class RoomResource {
+@Path("reservations")
+public class ReservationResource {
     private final Logger logger = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 
     @Inject
-    private RoomRepository roomRepository;
+    private ReservationRepository reservationRepository;
 
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Room findRoom(@PathParam("id") Long id) {
+    public Reservation findReservation(@PathParam("id") Long id) {
         logger.info("Getting room by id " + id);
-        return roomRepository.findById(id)
+        return reservationRepository.findById(id)
             .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces("application/json")
-    public List<Room> findAll() {
+    public List<Reservation> findAll() {
         logger.info("Getting all rooms");
-        return roomRepository.findAll();
+        return reservationRepository.findAll();
     }
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Room room(Room room) {
-        logger.info("Creating room " + room.getRoomNumber());
+    public Reservation reservation(Reservation reservation) {
+        logger.info("Creating reservation " + reservation.getId());
         try{
-            return roomRepository.create(room);
+            return reservationRepository.create(reservation);
         }catch (PersistenceException ex){
-            logger.info("Error creating room " + room.getRoomNumber());
+            logger.info("Error creating reservation " + reservation.getId());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
@@ -62,9 +62,9 @@ public class RoomResource {
     public void delete(@PathParam("id") Long id) {
         logger.info("Deleting room by id " + id);
         try{
-        	roomRepository.delete(id);
+        	reservationRepository.delete(id);
         }catch (IllegalArgumentException e){
-            logger.info("Error deleting coffee by id " + id);
+            logger.info("Error deleting reservation by id " + id);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
@@ -73,12 +73,12 @@ public class RoomResource {
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public Room update(Room room) {
-        logger.info("Updating room " + room.getRoomNumber());
+    public Reservation update(Reservation reservation) {
+        logger.info("Updating reservation " + reservation.getId());
         try{
-            return roomRepository.create(room);
+            return reservationRepository.create(reservation);
         }catch (PersistenceException ex){
-            logger.info("Error updating room " + room.getRoomNumber());
+            logger.info("Error updating room " + reservation.getId());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
