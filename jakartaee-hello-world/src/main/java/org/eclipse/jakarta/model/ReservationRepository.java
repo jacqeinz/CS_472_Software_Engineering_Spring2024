@@ -26,7 +26,7 @@ public class ReservationRepository {
     }
 
     public List<Reservation> findAll() {
-        logger.info("Getting all room");
+        logger.info("Getting all reservations");
         return em.createQuery("SELECT c FROM Room c", Reservation.class).getResultList();
     }
 
