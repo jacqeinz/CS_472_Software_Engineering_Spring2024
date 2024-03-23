@@ -33,8 +33,6 @@ public class Reservation implements Serializable {
 		this.id = id;
 	}
 
-
-	
 	public String getGuest() {
 		return guest;
 	}
