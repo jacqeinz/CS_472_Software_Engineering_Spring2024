@@ -20,7 +20,7 @@ public class RoomRepository {
     private EntityManager em;
 
     public Room create(Room room) {
-        logger.info("Creating room " + room.getName());
+        logger.info("Creating room " + room.getRoomNumber());
         em.persist(room);
 
         return room;
@@ -44,7 +44,7 @@ public class RoomRepository {
     }
 
     public Room update(Room room) {
-        logger.info("Updating room " + room.getName());
+        logger.info("Updating room " + room.getRoomNumber());
         return em.merge(room);
     }
 }
