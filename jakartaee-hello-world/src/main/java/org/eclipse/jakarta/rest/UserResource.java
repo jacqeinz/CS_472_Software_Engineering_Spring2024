@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.eclipse.jakarta.model.UserRepository;
-import org.eclipse.jakarta.model.entity.User;
+import org.eclipse.jakarta.model.entity.Account;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -31,7 +31,7 @@ public class UserResource {
     @GET
     @Path("{username}")
     @Produces("application/json")
-    public User findRoom(@PathParam("username") String username) {
+    public Account findRoom(@PathParam("username") String username) {
         logger.info("Getting user by username " + username);
         return userRepository.findByUsername(username)
             .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
@@ -39,7 +39,7 @@ public class UserResource {
 
     @GET
     @Produces("application/json")
-    public List<User> findAll() {
+    public List<Account> findAll() {
         logger.info("Getting all users");
         return userRepository.findAll();
     }
@@ -47,7 +47,7 @@ public class UserResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public User room(User user) {
+    public Account room(Account user) {
         logger.info("Creating room " + user.getUserName());
         try{
             return userRepository.create(user);
@@ -73,7 +73,7 @@ public class UserResource {
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public User update(User user) {
+    public Account update(Account user) {
         logger.info("Updating room " + user.getUserName());
         try{
             return userRepository.create(user);

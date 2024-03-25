@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.jakarta.model.entity.User;
+import org.eclipse.jakarta.model.entity.Account;
 
 
 import jakarta.ejb.Stateless;
@@ -19,21 +19,21 @@ public class UserRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public User create(User user) {
+    public Account create(Account user) {
         logger.info("Creating user " + user.getUserName());
         em.persist(user);
 
         return user;
     }
 
-    public List<User> findAll() {
+    public List<Account> findAll() {
         logger.info("Getting all room");
-        return em.createQuery("SELECT c FROM User c", User.class).getResultList();
+        return em.createQuery("SELECT c FROM User c", Account.class).getResultList();
     }
 
-    public Optional<User> findByUsername(String username) {
+    public Optional<Account> findByUsername(String username) {
         logger.info("Getting user by username " + username);
-        return Optional.ofNullable(em.find(User.class, username));
+        return Optional.ofNullable(em.find(Account.class, username));
     }
 
     public void delete(String username) {
@@ -43,7 +43,7 @@ public class UserRepository {
         em.remove(user);
     }
 
-    public User update(User user) {
+    public Account update(Account user) {
         logger.info("Updating user " + user.getUserName());
         return em.merge(user);
     }
