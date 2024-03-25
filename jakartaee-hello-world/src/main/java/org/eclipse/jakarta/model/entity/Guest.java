@@ -7,26 +7,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import java.util.*;
 @Entity
-public class Guest extends User {
+public class Guest extends Account {
     /**
 	 * 
 	 */
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long customerId;
+
+
 	private String paymentInfo;
-	private checkOutCart checkoutCart;
+	private Cart cart;
 	@ManyToMany
 	private List<Reservation> currentReservations = new ArrayList<Reservation>();;
 	private List<Date> pastReservations = new ArrayList<Date>();
 	
-	public long getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
-	}
+
 	public List<Reservation> getCurrentReservations() {
 		return currentReservations;
 	}
@@ -45,13 +39,13 @@ public class Guest extends User {
 	public void setPaymentInfo(String paymentInfo) {
 		this.paymentInfo = paymentInfo;
 	}
-	public checkOutCart getCheckoutCart() {
-		return checkoutCart;
+	public Cart getCart() {
+		return cart;
 	}
-	public void setCheckoutCart(checkOutCart checkoutCart) {
-		this.checkoutCart = checkoutCart;
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
-	
+
 	
 	
 	

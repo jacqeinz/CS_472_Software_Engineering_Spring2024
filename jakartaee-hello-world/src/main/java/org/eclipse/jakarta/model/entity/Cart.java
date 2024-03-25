@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import org.eclipse.jakarta.model.ReservationDetailsRepository;
 
-public class Cart {
+public class Cart implements Serializable{
 
 	@PersistenceContext
 	private EntityManager em;
