@@ -1,9 +1,16 @@
 package org.eclipse.jakarta.model.entity;
 
+import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
-public class Confirmation {
-	
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+public class Confirmation implements Serializable {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	private Cart conCart;
 	private String conID;
 	
@@ -26,6 +33,30 @@ public class Confirmation {
 			  return sb.toString(); 
 		
 		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Cart getConCart() {
+		return conCart;
+	}
+
+	public void setConCart(Cart conCart) {
+		this.conCart = conCart;
+	}
+
+	public String getConID() {
+		return conID;
+	}
+
+	public void setConID(String conID) {
+		this.conID = conID;
 	}
 
 }

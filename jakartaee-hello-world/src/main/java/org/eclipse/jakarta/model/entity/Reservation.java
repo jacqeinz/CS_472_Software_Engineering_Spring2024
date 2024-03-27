@@ -20,6 +20,7 @@ public class Reservation implements Serializable {
 	private List<RoomReservation> roomReservations  = new ArrayList<RoomReservation>();
 	private List<String> paymentInformation = new ArrayList<String>();
 	private List<String> occupants = new ArrayList<String>();
+	
 	public List<RoomReservation> getRoomReservation() {
 		return roomReservations;
 	}
