@@ -72,7 +72,7 @@ button:hover {
 <title>Reservation</title>
 </head>
 <body>
-<form action="reservation" method="post">
+<form action="ReservationServlet" method="post">
   <div class="elem-group">
     <label for="name">Your Name</label>
     <input type="text" id="name" name="visitor_name" placeholder="John Doe" pattern=[A-Z\sa-z]{3,20} required>

@@ -12,18 +12,20 @@
 <title>Home</title>
 </head>
 <body>
-<div class="bgimg">
-</div>
+<header class = "middle">
+        <h1>Welcome to Your Account</h1>
+  
+    </header>
+
   <div class="topleft">
-   
-  </div>
-  <div class="middle">
     <img src= "images/logo.PNG">
     <hr>
    </div>
          <div class="topright">
-        <button onclick="window.location.href = 'login.jsp'">Login </button>
+        <button onclick="window.location.href = 'Reservation.jsp'">Make Reservation </button>
       </div>
+    
+      
    </body>
 
 <style type = "text/css">
@@ -32,24 +34,7 @@ body, html {
   height: 100%
 }
 
-.bgimg {
-  /* Background image */
-  background-image: url('images/Capture.PNG');
-  /* Full-screen */
-  height: 100%;
-  /* Center the background image */
-  background-position: center;
-  /* Scale and zoom in the image */
-  background-size: cover;
-  /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
-  position: relative;
-  /* Add a white text color to all elements inside the .bgimg container */
-  color: white;
-  /* Add a font */
-  font-family: "Courier New", Courier, monospace;
-  /* Set the font-size to 25 pixels */
-  font-size: 25px;
-}
+
 
 /* Position text in the top-left corner */
 .topleft {

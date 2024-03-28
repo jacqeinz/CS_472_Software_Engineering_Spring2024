@@ -31,4 +31,14 @@
     <servlet-name>RoomList</servlet-name>
     <url-pattern>/RoomList</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GuestWelcome</display-name>
+    <servlet-name>GuestWelcome</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.GuestWelcome</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GuestWelcome</servlet-name>
+    <url-pattern>/GuestWelcome</url-pattern>
+  </servlet-mapping>
 </web-app>
