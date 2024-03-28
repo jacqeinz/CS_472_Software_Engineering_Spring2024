@@ -106,7 +106,7 @@ button:hover {
   <hr>
   <div class="elem-group">
     <label for="message">Anything Else?</label>
-    <textarea id="message" name="visitor_message" placeholder="Tell us anything else that might be important." required></textarea>
+    <textarea id="message" name="visitor_message" placeholder="Tell us anything else that might be important."></textarea>
   </div>
   <button type="submit">Book The Rooms</button>
 </form>
