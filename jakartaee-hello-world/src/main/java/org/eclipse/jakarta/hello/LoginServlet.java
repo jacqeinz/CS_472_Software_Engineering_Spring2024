@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession httpSession = request.getSession();
             // By setting the variable in session, it can be forwarded
             httpSession.setAttribute("emailId", emailId);
-            request.getRequestDispatcher("Reservation.jsp").forward(request, response);
+            request.getRequestDispatcher("GuestWelcome.jsp").forward(request, response);
         }
     }
 
