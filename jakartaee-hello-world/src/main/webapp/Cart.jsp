@@ -77,7 +77,7 @@ function Test(cart)
 		</tr>
 		<tr>
 			<td><%=cart.getDetailsGuest()%></td>
-			<td>Coming Soon</td>
+			<td>Single Queen Sized Bed</td>
 			<td><%=cart.getCheckIn()%></td>
 			<td><%=cart.getCheckOut()%></td>
 			<td><%=cart.getPrice()%></td>

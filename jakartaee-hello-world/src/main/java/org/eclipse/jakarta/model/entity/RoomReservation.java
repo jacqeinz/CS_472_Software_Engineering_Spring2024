@@ -16,8 +16,37 @@ public class RoomReservation implements Serializable {
 	private Long id;
 	private String guest;
 	private Room room;
+	private int price;
+	private Date checkin;
+	private Date checkout;
+	private String roomType;
 	private String roomNumber;
+	public String getRoomNumber() {
+		return roomNumber;
+	}
+	public void setRoomNumber(String roomNumber) {
+		this.roomNumber = roomNumber;
+	}
 	private List<Date> dates = new ArrayList<Date>();
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public Date getCheckin() {
+		return checkin;
+	}
+	public void setCheckin(Date checkin) {
+		this.checkin = checkin;
+	}
+	public Date getCheckout() {
+		return checkout;
+	}
+	public void setCheckout(Date checkout) {
+		this.checkout = checkout;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -37,11 +66,11 @@ public class RoomReservation implements Serializable {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	public String getRoomNumber() {
-		return roomNumber;
+	public String getRoomType() {
+		return roomType;
 	}
-	public void setRoomNumber(String roomNumber) {
-		this.roomNumber = roomNumber;
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
 	public List<Date> getDates() {
 		return dates;
