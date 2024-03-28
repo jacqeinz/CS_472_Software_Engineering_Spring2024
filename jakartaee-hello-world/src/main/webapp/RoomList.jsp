@@ -50,8 +50,8 @@ button {
 
 <body>
 	<%
-	String CheckIn = "2024-02-19";
-	String CheckOut = "2024-02-24";
+	String CheckIn = "2024-03-28";
+	String CheckOut = "2024-03-30";
 	String roomType = "Single Queen Sized Bed";
 	String price = "500";
 	%>
