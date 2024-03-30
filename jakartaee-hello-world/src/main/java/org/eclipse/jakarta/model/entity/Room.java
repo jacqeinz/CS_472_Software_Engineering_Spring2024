@@ -18,10 +18,17 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomNumber;
+    private String roomType;
     private String  price;
     private int floorNumber;
     private List<Date> list = new ArrayList<Date>();
     
+	public String getRoomType() {
+		return roomType;
+	}
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
+	}
 	public String getRoomNumber() {
 		return roomNumber;
 	}

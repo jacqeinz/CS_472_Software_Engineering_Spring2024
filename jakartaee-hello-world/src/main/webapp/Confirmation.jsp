@@ -44,7 +44,7 @@ th {
 	</div>
 	<div class="body">
 	<p>Thank you for choosing ABCFG Hotel!</p>
-	<p>You're Confirmation Number Is</p>
+<!-- 	<p>You're Confirmation Number Is</p> -->
 	</div>
 	<div class="confirmation">
 	<h2></h2>
