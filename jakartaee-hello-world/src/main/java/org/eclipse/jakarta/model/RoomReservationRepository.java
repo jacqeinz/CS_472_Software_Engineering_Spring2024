@@ -18,7 +18,7 @@ public class RoomReservationRepository {
 	    private EntityManager em;
 
 	    public RoomReservation create(RoomReservation roomReservation) {
-	        logger.info("Creating room " + roomReservation.getRoomNumber());
+	        logger.info("Creating room " + roomReservation.getId());
 	        em.persist(roomReservation);
 
 	        return roomReservation;
@@ -42,7 +42,7 @@ public class RoomReservationRepository {
 	    }
 
 	    public RoomReservation update(RoomReservation roomReservation) {
-	        logger.info("Updating room reeservation" + roomReservation.getRoomNumber());
+	        logger.info("Updating room reeservation" + roomReservation.getId());
 	        return em.merge(roomReservation);
 	    }
 

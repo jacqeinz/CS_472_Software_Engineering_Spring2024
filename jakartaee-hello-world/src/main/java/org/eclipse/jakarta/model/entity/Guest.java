@@ -5,8 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
 import java.util.*;
 @Entity
+@Table(name="guest")
 public class Guest extends Account {
     /**
 	 * 
@@ -18,7 +21,7 @@ public class Guest extends Account {
 	private Cart cart;
 	@ManyToMany
 	private List<Reservation> currentReservations = new ArrayList<Reservation>();;
-	private List<Date> pastReservations = new ArrayList<Date>();
+	private List<Reservation> pastReservations = new ArrayList<Reservation>();
 	
 
 	public List<Reservation> getCurrentReservations() {
@@ -27,12 +30,7 @@ public class Guest extends Account {
 	public void setCurrentReservations(List<Reservation> currentReservations) {
 		this.currentReservations = currentReservations;
 	}
-	public List<Date> getPastReservations() {
-		return pastReservations;
-	}
-	public void setPastReservations(List<Date> pastReservations) {
-		this.pastReservations = pastReservations;
-	}
+}
 	public String getPaymentInfo() {
 		return paymentInfo;
 	}
@@ -44,6 +42,12 @@ public class Guest extends Account {
 	}
 	public void setCart(Cart cart) {
 		this.cart = cart;
+	}
+	public List<Reservation> getPastReservations() {
+		return pastReservations;
+	}
+	public void setPastReservations(List<Reservation> pastReservations) {
+		this.pastReservations = pastReservations;
 	}
 
 	

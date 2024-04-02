@@ -14,10 +14,20 @@ public class RoomReservation implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String guest;
+	private Guest guest;
 	private Room room;
-	private String roomNumber;
-	private List<Date> dates = new ArrayList<Date>();
+	private int price;
+
+
+	private List<String> dates = new ArrayList<String>();
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -25,10 +35,11 @@ public class RoomReservation implements Serializable {
 		this.id = id;
 	}
 
-	public String getGuest() {
+
+	public Guest getGuest() {
 		return guest;
 	}
-	public void setGuest(String guest) {
+	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
 	public Room getRoom() {
@@ -37,16 +48,10 @@ public class RoomReservation implements Serializable {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	public String getRoomNumber() {
-		return roomNumber;
-	}
-	public void setRoomNumber(String roomNumber) {
-		this.roomNumber = roomNumber;
-	}
-	public List<Date> getDates() {
+	public List<String> getDates() {
 		return dates;
 	}
-	public void setDates(List<Date> dates) {
+	public void setDates(List<String> dates) {
 		this.dates = dates;
 	}
 

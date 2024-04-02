@@ -25,8 +25,8 @@ public class Account implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String firstName;
-	private String lastName;
+	private String Name;
+
 	private String homeAddress;
 	private String dateOfBirth;
 	private String email;
@@ -41,17 +41,12 @@ public class Account implements Serializable {
 	}
 	
 	public String getFirstName() {
-		return firstName;
+		return Name;
 	}
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.Name = firstName;
 	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+
 	public String getHomeAddress() {
 		return homeAddress;
 	}

@@ -1,29 +1,31 @@
 package org.eclipse.jakarta.hello;
 
 import java.io.IOException;
-import java.io.PrintWriter;
- 
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
- 
-/**
- * Servlet implementation class LoginServlet
- */
-@WebServlet("/loginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/ReservationServlet")
+public class ReservationServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       
+	public ReservationServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	  
+	
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
-        super();
+  
+      
         // TODO Auto-generated constructor stub
-    }
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,24 +39,27 @@ public class LoginServlet extends HttpServlet {
         // Form arguments should be matched and then only they are recognised
         // login.jsp component names should match and then only
           // by using request.getParameter, it is matched
-        String emailId = request.getParameter("emailId");
-        String password = request.getParameter("password");
+        String checkin = request.getParameter("checkin");
+        String checkout = request.getParameter("checkout");
+        String name = request.getParameter("name");
         // To verify whether entered data is printing correctly or not
-        System.out.println("emailId.." + emailId);
-        System.out.println("password.." + password);
+        System.out.println("checkin" + checkin);
+        System.out.println("checkout.." + checkout);
+        System.out.println("name.." + name);
         // Here the business validations goes. As a sample, 
           // we can check against a hardcoded value or pass 
           // the values into a database which can be available in local/remote  db
         // For easier way, let us check against a hardcoded value
-        if (emailId != null && emailId.equalsIgnoreCase("abcfg@gmail.com") && password != null && password.equalsIgnoreCase("abcfg")) {
+        if (checkin != null && checkout != null) {
             // We can redirect the page to a welcome page
             // Need to pass the values in session in order 
               // to carry forward that one to next pages
             HttpSession httpSession = request.getSession();
             // By setting the variable in session, it can be forwarded
-            httpSession.setAttribute("emailId", emailId);
-            request.getRequestDispatcher("GuestWelcome.jsp").forward(request, response);
+            httpSession.setAttribute("name", name);
+            httpSession.setAttribute("checkout", checkout);
+            httpSession.setAttribute("checkin", checkin);
+            request.getRequestDispatcher("RoomList.jsp").forward(request, response);
         }
     }
-
 }

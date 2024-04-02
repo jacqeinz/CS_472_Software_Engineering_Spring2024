@@ -59,10 +59,10 @@ function Test(cart)
 
 <body>
 	<%
-	String CheckIn = "2024-02-19";
-	String CheckOut = "2024-02-24";
+	String CheckIn = "2024-03-28";
+	String CheckOut = "2024-03-30";
 	Cart cart = new Cart("$500", CheckIn, CheckOut);
-	cart.setDetailsGuest("Benaiah");
+	cart.setDetailsGuest("Team Abcfg");
 	%>
 	<div class="header">
 		<h1>ABCFG Hotel</h1>
@@ -77,7 +77,7 @@ function Test(cart)
 		</tr>
 		<tr>
 			<td><%=cart.getDetailsGuest()%></td>
-			<td>Coming Soon</td>
+			<td>Single Queen Sized Bed</td>
 			<td><%=cart.getCheckIn()%></td>
 			<td><%=cart.getCheckOut()%></td>
 			<td><%=cart.getPrice()%></td>
