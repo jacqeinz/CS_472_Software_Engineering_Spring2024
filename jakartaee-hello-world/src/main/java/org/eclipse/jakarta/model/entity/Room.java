@@ -19,9 +19,9 @@ public class Room implements Serializable {
     private Long id;
     private String roomNumber;
     private String roomType;
-    private String  price;
+    private int  price;
     private int floorNumber;
-    private List<Date> list = new ArrayList<Date>();
+    private List<String> bookedDates = new ArrayList<String>();
     
 	public String getRoomType() {
 		return roomType;
@@ -43,11 +43,12 @@ public class Room implements Serializable {
 	}
 
 
-	public List<Date> getList() {
-		return list;
+
+	public List<String> getBookedDates() {
+		return bookedDates;
 	}
-	public void setList(List<Date> list) {
-		this.list = list;
+	public void setBookedDates(List<String> bookedDates) {
+		this.bookedDates = bookedDates;
 	}
 	public Long getId() {
 		return id;
@@ -59,10 +60,10 @@ public class Room implements Serializable {
 	public void setName(String name) {
 		this.roomNumber = name;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

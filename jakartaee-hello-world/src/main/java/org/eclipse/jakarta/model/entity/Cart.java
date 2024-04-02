@@ -55,9 +55,6 @@ public class Cart implements Serializable{
 		this.price = price;
 	}
 
-	public String getReservationDetails() {
-		return details.getGuest();
-	}
 
 	public int getCartSize() {
 		return cartSize;
@@ -67,13 +64,6 @@ public class Cart implements Serializable{
 		this.cartSize = cartSize;
 	}
 
-	public void setDetailsGuest(String guest) {
-		details.setGuest(guest);
-	}
-
-	public String getDetailsGuest() {
-		return this.details.getGuest();
-	}
 
 	public LocalDate getCheckIn() {
 		LocalDate in = this.list.get(0);
