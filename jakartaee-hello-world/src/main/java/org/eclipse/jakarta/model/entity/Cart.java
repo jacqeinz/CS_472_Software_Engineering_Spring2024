@@ -18,7 +18,7 @@ public class Cart implements Serializable{
 
 	@PersistenceContext
 	private EntityManager em;
-	private String name;
+	private Guest guest;
 	private String price;
 	private int cartSize;
 	private ReservationDetails details;
@@ -35,13 +35,17 @@ public class Cart implements Serializable{
 
 	}
 
-	public String getName() {
-		return name;
+	public Guest getGuest() {
+		return guest;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+
+	public void setGuest(Guest guest) {
+		this.guest = guest;
 	}
+
+
 
 	public String getPrice() {
 		return price;
@@ -51,9 +55,6 @@ public class Cart implements Serializable{
 		this.price = price;
 	}
 
-	public String getReservationDetails() {
-		return details.getGuest();
-	}
 
 	public int getCartSize() {
 		return cartSize;
@@ -63,13 +64,6 @@ public class Cart implements Serializable{
 		this.cartSize = cartSize;
 	}
 
-	public void setDetailsGuest(String guest) {
-		details.setGuest(guest);
-	}
-
-	public String getDetailsGuest() {
-		return this.details.getGuest();
-	}
 
 	public LocalDate getCheckIn() {
 		LocalDate in = this.list.get(0);

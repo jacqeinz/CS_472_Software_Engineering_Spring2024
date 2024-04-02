@@ -4,8 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.eclipse.jakarta.model.RoomReservationRepository;
-import org.eclipse.jakarta.model.entity.RoomReservation;
+import org.eclipse.jakarta.model.CartRepository;
+import org.eclipse.jakarta.model.entity.Cart;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -21,50 +21,50 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
 
-@Path("roomReservations")
-public class RoomReservationResource {
+@Path("users")
+public class CartResource {
     private final Logger logger = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 
     @Inject
-    private RoomReservationRepository roomReservationRepository;
+    private CartRepository cartRepository;
 
     @GET
-    @Path("{id}")
+    @Path("{username}")
     @Produces("application/json")
-    public RoomReservation findRoomReservation(@PathParam("id") Long id) {
-        logger.info("Getting roomReservation by id " + id);
-        return roomReservationRepository.findById(id)
+    public Cart findRoom(@PathParam("username") String username) {
+        logger.info("Getting user by username " + username);
+        return cartRepository.findByUsername(username)
             .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces("application/json")
-    public List<RoomReservation> findAll() {
-        logger.info("Getting all room reservations");
-        return roomReservationRepository.findAll();
+    public List<Cart> findAll() {
+        logger.info("Getting all users");
+        return cartRepository.findAll();
     }
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public RoomReservation roomReservation(RoomReservation roomReservation) {
-        logger.info("Creating room reservation " + roomReservation.getId());
+    public Cart room(Cart cart) {
+        logger.info("Creating room " + cart.getPrice());
         try{
-            return roomReservationRepository.create(roomReservation);
+            return cartRepository.create(cart);
         }catch (PersistenceException ex){
-            logger.info("Error creating roomreservation " + roomReservation.getId());
+            logger.info("Error creating user " + cart.getPrice());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
 
     @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
-        logger.info("Deleting room by id " + id);
+    @Path("{username}")
+    public void delete(@PathParam("username") String username) {
+        logger.info("Deleting user by username " + username);
         try{
-        	roomReservationRepository.delete(id);
+        	cartRepository.delete(username);
         }catch (IllegalArgumentException e){
-            logger.info("Error deleting coffee by id " + id);
+            logger.info("Error deleting coffee by id " + username);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
@@ -73,12 +73,12 @@ public class RoomReservationResource {
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public RoomReservation update(RoomReservation roomReservation) {
-        logger.info("Updating room " + roomReservation.getId());
+    public Cart update(Cart cart) {
+        logger.info("Updating room " + cart.getPrice());
         try{
-            return roomReservationRepository.create(roomReservation);
+            return cartRepository.create(cart);
         }catch (PersistenceException ex){
-            logger.info("Error updating room reservation" + roomReservation.getId());
+            logger.info("Error updating user " + cart.getPrice());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }

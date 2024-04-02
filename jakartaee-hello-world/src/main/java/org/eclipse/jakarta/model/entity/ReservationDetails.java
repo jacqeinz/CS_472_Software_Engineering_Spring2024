@@ -10,25 +10,25 @@ public class ReservationDetails implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
-	private List<Date> list = new ArrayList<Date>();
-	private String guest;
+	private List<String> Bookedlist = new ArrayList<String>();
+	private Guest guest;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public List<Date> getList() {
-		return list;
+
+	public List<String> getBookedlist() {
+		return Bookedlist;
 	}
-	public void setList(List<Date> list) {
-		this.list = list;
+	public void setBookedlist(List<String> bookedlist) {
+		Bookedlist = bookedlist;
 	}
-	public String getGuest() {
+	public Guest getGuest() {
 		return guest;
 	}
-	public void setGuest(String guest) {
+	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
-
 }

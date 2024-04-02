@@ -62,7 +62,7 @@ function Test(cart)
 	String CheckIn = "2024-03-28";
 	String CheckOut = "2024-03-30";
 	Cart cart = new Cart("$500", CheckIn, CheckOut);
-	cart.setDetailsGuest("Benaiah");
+	cart.setDetailsGuest("Team Abcfg");
 	%>
 	<div class="header">
 		<h1>ABCFG Hotel</h1>
