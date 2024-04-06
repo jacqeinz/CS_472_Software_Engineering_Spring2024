@@ -30,7 +30,7 @@ public class Guest extends Account {
 	public void setCurrentReservations(List<Reservation> currentReservations) {
 		this.currentReservations = currentReservations;
 	}
-}
+
 	public String getPaymentInfo() {
 		return paymentInfo;
 	}
