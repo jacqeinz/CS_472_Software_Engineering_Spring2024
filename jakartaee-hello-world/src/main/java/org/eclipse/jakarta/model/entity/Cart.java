@@ -22,7 +22,7 @@ public class Cart implements Serializable{
 	private String price;
 	private int cartSize;
 	private ReservationDetails details;
-	private List<LocalDate> list = new ArrayList<LocalDate>();
+	private List<LocalDate> dateList = new ArrayList<LocalDate>();
 
 	public Cart(String p, String CheckIn, String CheckOut) {
 		LocalDate in = LocalDate.parse(CheckIn);
@@ -30,8 +30,8 @@ public class Cart implements Serializable{
 		this.price = p;
 		cartSize += 1;
 		details = new ReservationDetails();
-		list.add(in);
-		list.add(out);
+		dateList.add(in);
+		dateList.add(out);
 
 	}
 
@@ -66,13 +66,13 @@ public class Cart implements Serializable{
 
 
 	public LocalDate getCheckIn() {
-		LocalDate in = this.list.get(0);
+		LocalDate in = this.dateList.get(0);
 		return in;
 
 	}
 
 	public LocalDate getCheckOut() {
-		LocalDate out = this.list.get(1);
+		LocalDate out = this.dateList.get(1);
 		return out;
 
 	}

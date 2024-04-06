@@ -43,5 +43,5 @@ public class CartServlet extends HttpServlet {
     	httpSession.setAttribute("roomType", roomType);
             request.getRequestDispatcher("Confirmation.jsp").forward(request, response);
         }
-    
+
 }

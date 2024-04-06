@@ -41,4 +41,44 @@
     <servlet-name>GuestWelcome</servlet-name>
     <url-pattern>/GuestWelcome</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminDashboardServlet</display-name>
+    <servlet-name>AdminDashboardServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.AdminDashboardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDashboardServlet</servlet-name>
+    <url-pattern>/AdminDashboardServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminLoginServlet</display-name>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.AdminLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <url-pattern>/AdminLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminRegistrationServlet</display-name>
+    <servlet-name>AdminRegistrationServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.AdminRegistrationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminRegistrationServlet</servlet-name>
+    <url-pattern>/AdminRegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ConfirmationServlet</display-name>
+    <servlet-name>ConfirmationServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.ConfirmationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmationServlet</servlet-name>
+    <url-pattern>/ConfirmationServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
