@@ -4,11 +4,40 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "admin")
+
+
 public class Admin extends Account {
     private boolean isAdmin;
+    private int employeeId;
+    
+    
+    /**
+	 * 
+	 */
 
-    public boolean isAdmin() {
+	/**
+	 * 
+	 */
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	/**
+	 * @param isAdmin
+	 * @param employeeId
+	 */
+	public Admin(boolean isAdmin, int employeeId) {
+		super();
+		this.isAdmin = isAdmin;
+		this.employeeId = employeeId;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public boolean isAdmin() {
         return isAdmin;
     }
 

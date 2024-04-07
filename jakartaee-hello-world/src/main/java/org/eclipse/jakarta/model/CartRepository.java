@@ -20,7 +20,7 @@ public class CartRepository {
     private EntityManager em;
 
     public Cart create(Cart cart) {
-        logger.info("Creating user " + cart.getPrice());
+        logger.info("Creating user " + cart.getId());
         em.persist(cart);
 
         return cart;
@@ -44,7 +44,7 @@ public class CartRepository {
     }
 
     public Cart update(Cart cart) {
-        logger.info("Updating user " + cart.getPrice());
+        logger.info("Updating user " + cart.getId());
         return em.merge(cart);
     }
 }

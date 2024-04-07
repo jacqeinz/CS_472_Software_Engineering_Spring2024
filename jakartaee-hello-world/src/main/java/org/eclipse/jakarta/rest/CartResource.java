@@ -48,11 +48,11 @@ public class CartResource {
     @Consumes("application/json")
     @Produces("application/json")
     public Cart room(Cart cart) {
-        logger.info("Creating room " + cart.getPrice());
+        logger.info("Creating room " + cart.getId());
         try{
             return cartRepository.create(cart);
         }catch (PersistenceException ex){
-            logger.info("Error creating user " + cart.getPrice());
+            logger.info("Error creating user " + cart.getId());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
@@ -74,11 +74,11 @@ public class CartResource {
     @Consumes("application/json")
     @Produces("application/json")
     public Cart update(Cart cart) {
-        logger.info("Updating room " + cart.getPrice());
+        logger.info("Updating room " + cart.getId());
         try{
             return cartRepository.create(cart);
         }catch (PersistenceException ex){
-            logger.info("Error updating user " + cart.getPrice());
+            logger.info("Error updating user " + cart.getId());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
