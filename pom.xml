@@ -8,10 +8,10 @@
 		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.website</groupId>
-	<artifactId>hotelwebsite</artifactId>
+	<groupId>Spring2024.CS472</groupId>
+	<artifactId>HotelWebsite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>hotelwebsite</name>
+	<name>HotelWebsite</name>
 	<description>HotelWebsite</description>
 	<properties>
 		<java.version>17</java.version>
