@@ -1,5 +1,5 @@
 package org.eclipse.jakarta.hello;
-
+import org.eclipse.jakarta.model.entity.*;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-@WebServlet("/LandingBookingPageServlet")
+@WebServlet("/BookingPageServlet")
 public class BookingPageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -42,10 +42,10 @@ public class BookingPageServlet extends HttpServlet {
         String checkin = request.getParameter("checkin");
         String checkout = request.getParameter("checkout");
         
-        rooms = document.querySelectorAll('.room');
-        	cart = document.getElementById('cart');
-        	totalElement = document.getElementById('price');
-        	selectedItems = {};
+        String room = request.getParameter("room");
+        String cart = request.getParameter("cart");
+        String totalElement = request.getParameter("price");
+     
         // To verify whether entered data is printing correctly or not
         System.out.println("checkin" + checkin);
         System.out.println("checkout.." + checkout);
@@ -63,8 +63,7 @@ public class BookingPageServlet extends HttpServlet {
             
             httpSession.setAttribute("checkout", checkout);
             httpSession.setAttribute("checkin", checkin);
-            request.getRequestDispatcher("Cart.jsp").forward(request, response);
-            
+           
 
             
         }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>Home Page</title>
-
+</head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -36,10 +36,20 @@
       padding: 10px;
   }
 
+  .rooms {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+  }
+
+  .room {
+      text-align: center;
+  }
 
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 </style>
-</head>
+
 <body class="w3-light-grey">
 
 <!-- Navigation Bar -->
@@ -52,7 +62,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 </div>
 <!-- Header -->
 <header class="w3-display-container w3-content" style="max-width:1500px;">
-  <img class="w3-image" src="/images/hotelmain.jpg" alt="The Hotel" style="min-width:1000px" width="1500" height="800">
+  <img class="w3-image" src="images/hotelmain.jpeg" alt="The Hotel" style="min-width:500px" width="1500" height="600">
   <div class="w3-display-left w3-padding w3-col l6 m8">
     <div class="w3-container w3-red">
       <h2><i class="fa fa-bed w3-margin-right"></i>ABCFG Hotel</h2>
@@ -84,9 +94,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     </div>
   </div>
 </header>
- <form action="loginServlet" method="post">
+
 <!-- Page content -->
-<div class="w3-content" style="max-width:1532px;">
+
 
   <div class="w3-container w3-margin-top" id="rooms">
     <h3>Rooms</h3>
@@ -117,8 +127,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
   </div>
 
   <div class="w3-row-padding w3-padding-16" class = "rooms">
+          <aside>
+            <aside>
+                <h2>Reservations in Cart</h2>
+                <ul id="cart"></ul>
+                <div id="total">Total Amount: $0</div>
+            </aside>
+        </aside>
+	 <button type="submit" onClick="Test(cart)">Checkout</button>
+  
+  <main>
     <div class="w3-third w3-margin-bottom">
-      <img src="/images/room_single.jpg" alt="Norway" style="width:100%">
+      <img src="images/room_single.jpg" alt="Norway" style="min-width:100px" width="100" height="100">
       <div class="w3-container w3-white" id = "SingleRoom" class = "room">
         <h3>Single Room</h3>
         <h6 class="w3-opacity" class = "price">From $99</h6>
@@ -129,7 +149,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </div>
     </div>
     <div class="w3-third w3-margin-bottom">
-      <img src="/images/Kingbed.jpg" alt="Norway" style="width:100%">
+      <img src="images/Kingbed.jpg" alt="Norway" style="min-width:100px" width="100" height="100">
       <div class="w3-container w3-white" id = "QueenRoom" class = "room">
         <h3>Queen Bed Room</h3>
         <h6 class="w3-opacity" class = "price">From $149</h6>
@@ -140,7 +160,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </div>
     </div>
     <div class="w3-third w3-margin-bottom">
-      <img src="/images/Suite.jpg" alt="Norway" style="width:100%">
+      <img src="images/Suite.jpg" alt="Norway" style="min-width:100px" width="100" height="100">
       <div class="w3-container w3-white" id = "DRoom" class = "room">
         <h3>Deluxe Room</h3>
         <h6 class="w3-opacity" class = "price">From $199</h6>
@@ -151,7 +171,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </div>
     </div>
         <div class="w3-third w3-margin-bottom">
-      <img src="/images/SuiteWithLoft.jpg" alt="Norway" style="width:100%">
+      <img src="images/SuiteWithLoft.jpg" alt="Norway" style="min-width:100px" width="100" height="100">
       <div class="w3-container w3-white" id = "DRoomWL" class = "room">
         <h3>Deluxe Room with Loft</h3>
         <h6 class="w3-opacity" class = "price">From $299</h6>
@@ -161,19 +181,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
         <button class="w3-button w3-block w3-black w3-margin-bottom" >Choose Room</button>
       </div>
     </div>
+    </main>
+ 
   </div>
-  <div class="container">
-        <aside>
-            <aside>
-                <h2>Reservations in Cart</h2>
-                <ul id="cart"></ul>
-                <div id="total">Total Amount: $0</div>
-            </aside>
-        </aside>
-	 <button type="submit" onClick="Test(cart)">Checkout</button>
-</div>
-</div>
-</form>
+
+
 
   <div class="w3-row-padding" id="about">
     <div class="w3-col l4 12">
@@ -183,7 +195,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     </div>
     <div class="w3-col l8 12">
       <!-- Image of location/map -->
-      <img src="/images/lc.jpg" class="w3-image w3-greyscale" style="width:100%;">
+      <img src="images/lc.jpg" class="w3-image w3-greyscale" style="width:100%;">
     </div>
   </div>
   
@@ -205,7 +217,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
   <div class="w3-row-padding w3-padding-16 w3-text-white w3-large">
     <div class="w3-half w3-margin-bottom">
       <div class="w3-display-container">
-        <img src="/w3images/cinqueterre.jpg" alt="Cinque Terre" style="width:100%">
+        <img src="w3images/cinqueterre.jpg" alt="Cinque Terre" style="width:100%">
         <span class="w3-display-bottomleft w3-padding">Cinque Terre</span>
       </div>
     </div>
@@ -213,13 +225,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <div class="w3-row-padding" style="margin:0 -16px">
         <div class="w3-half w3-margin-bottom">
           <div class="w3-display-container">
-            <img src="/w3images/newyork2.jpg" alt="New York" style="width:100%">
+            <img src="w3images/newyork2.jpg" alt="New York" style="width:100%">
             <span class="w3-display-bottomleft w3-padding">New York</span>
           </div>
         </div>
         <div class="w3-half w3-margin-bottom">
           <div class="w3-display-container">
-            <img src="/w3images/sanfran.jpg" alt="San Francisco" style="width:100%">
+            <img src="w3images/sanfran.jpg" alt="San Francisco" style="width:100%">
             <span class="w3-display-bottomleft w3-padding">San Francisco</span>
           </div>
         </div>
@@ -227,13 +239,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <div class="w3-row-padding" style="margin:0 -16px">
         <div class="w3-half w3-margin-bottom">
           <div class="w3-display-container">
-            <img src="/w3images/pisa.jpg" alt="Pisa" style="width:100%">
+            <img src="w3images/pisa.jpg" alt="Pisa" style="width:100%">
             <span class="w3-display-bottomleft w3-padding">Pisa</span>
           </div>
         </div>
         <div class="w3-half w3-margin-bottom">
           <div class="w3-display-container">
-            <img src="/w3images/paris.jpg" alt="Paris" style="width:100%">
+            <img src="w3images/paris.jpg" alt="Paris" style="width:100%">
             <span class="w3-display-bottomleft w3-padding">Paris</span>
           </div>
         </div>
@@ -262,8 +274,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <p><button class="w3-button w3-black w3-padding-large" type="submit">SEND MESSAGE</button></p>
     </form>
   </div>
+  <!-- Footer -->
+<footer class="w3-padding-32 w3-black w3-center w3-margin-top">
+  <h5>Find Us On</h5>
+  <div class="w3-xlarge w3-padding-16">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+  
 <script>
-const cards = document.querySelectorAll('.card');
+const rooms = document.querySelectorAll('.room');
 const cart = document.getElementById('cart');
 const totalElement = document.getElementById('total'); 
 const selectedItems = {};
@@ -351,19 +377,6 @@ cards.forEach((card) => {
 </script>
 <!-- End page content -->
 
-<!-- Footer -->
-<footer class="w3-padding-32 w3-black w3-center w3-margin-top">
-  <h5>Find Us On</h5>
-  <div class="w3-xlarge w3-padding-16">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-  </div>
-  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-</footer>
 
 <!-- Add Google Maps -->
 <script>

@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/loginServlet")
+@WebServlet("/GuestloginServlet")
 public class GuestLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

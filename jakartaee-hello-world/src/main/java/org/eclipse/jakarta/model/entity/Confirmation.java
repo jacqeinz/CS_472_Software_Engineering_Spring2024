@@ -1,11 +1,14 @@
 package org.eclipse.jakarta.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.random.RandomGenerator;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 public class Confirmation implements Serializable {
 	@Id
@@ -13,13 +16,22 @@ public class Confirmation implements Serializable {
     private Long id;
 	private Cart conCart;
 	private String conID;
-	
+	@ManyToMany
+	private List<ReservationDetails> reservationDetails  = new ArrayList<ReservationDetails>();
 	public Confirmation(Cart cart) {
 		this.conCart=cart;
 		conID=randomGenerator();
 		
 	}
 	
+	public List<ReservationDetails> getReservationDetails() {
+		return reservationDetails;
+	}
+
+	public void setReservationDetails(List<ReservationDetails> reservationDetails) {
+		this.reservationDetails = reservationDetails;
+	}
+
 	public String randomGenerator() {
 		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		         + "0123456789"
