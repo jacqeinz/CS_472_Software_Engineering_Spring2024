@@ -10,7 +10,7 @@ public class Admin extends Account {
 
     private int employeeId;
 
-    protected Admin() {}
+    public Admin() {}
 
 
     /**

@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="account_type",
         discriminatorType = DiscriminatorType.STRING)
-public abstract class Account {
+public class Account {
 
 
     @Id
@@ -46,6 +46,9 @@ public abstract class Account {
         this.userPassword = userPassword;
     }
     public Account(){}
+
+    public Account(String name, String homeAddress, String dateOfBirth, String email, String phoneNumber, String userName, String userPassword, String paymentInfo) {
+    }
 
     public Long getId() {
         return id;
@@ -95,6 +98,15 @@ public abstract class Account {
     }
 
 
+    public void add(Account account) {
+        this.id += account.getId();
+        this.Name += account.getName();
+        this.homeAddress += account.getHomeAddress();
+        this.dateOfBirth += account.getDateOfBirth();
+        this.email += account.getEmail();
+        this.phoneNumber += account.getPhoneNumber();
+        this.userName += account.getUserName();
+        this.userPassword += account.getUserPassword();
 
-
+    }
 }
