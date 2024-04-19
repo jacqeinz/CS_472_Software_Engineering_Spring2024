@@ -61,4 +61,6 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
+    public void deleteRoom(Room room) {roomRepository.delete(room);}
+
 }
