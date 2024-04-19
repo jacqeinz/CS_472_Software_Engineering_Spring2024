@@ -7,51 +7,53 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Entity;
 import java.util.*;
 import java.io.Serializable;
-
+//Will be used for Graphical Display
 @Entity
 public class Reservation implements Serializable {
-
+	
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String guest;
-	@ManyToMany
-	private List<RoomReservation> roomReservations  = new ArrayList<RoomReservation>();
-	private List<String> paymentInformation = new ArrayList<String>();
-	private List<String> occupants = new ArrayList<String>();
+	private Guest guest;
+	private List<String> dates = new ArrayList<String>();
+	private Room room;
 	
-	public List<RoomReservation> getRoomReservation() {
-		return roomReservations;
-	}
-	public void setRoomReservation(List<RoomReservation> roomReservations) {
-		this.roomReservations = roomReservations;
+
+	public Reservation(Long id, Guest guest, List<String> dates, Room room) {
+		super();
+		this.id = id;
+		this.guest = guest;
+		this.dates = dates;
+		this.room = room;
 	}
 	public Long getId() {
 		return id;
+	}
+	public Guest getGuest() {
+		return guest;
+	}
+	public void setGuest(Guest guest) {
+		this.guest = guest;
+	}
+
+	public List<String> getDates() {
+		return dates;
+	}
+	public void setDates(List<String> dates) {
+		this.dates = dates;
+	}
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getGuest() {
-		return guest;
-	}
-	public void setGuest(String guest) {
-		this.guest = guest;
-	}
-	public List<String> getPaymentInformation() {
-		return paymentInformation;
-	}
-	public void setPaymentInformation(List<String> paymentInformation) {
-		this.paymentInformation = paymentInformation;
-	}
-	public List<String> getOccupants() {
-		return occupants;
-	}
-	public void setOccupants(List<String> occupants) {
-		this.occupants = occupants;
-	} 
-	
+
+
 
 }

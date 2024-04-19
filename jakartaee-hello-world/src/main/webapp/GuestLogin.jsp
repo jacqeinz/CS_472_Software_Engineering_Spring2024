@@ -1,125 +1,239 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<meta charset="ISO-8859-1">
+
 <html>
 <head>
 
-<title>Login Application</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
- 
-<!-- css related code which we can have either in 
-     same jsp or separately also in a css file -->
+<title>Insert title here</title>
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-form {border: 3px solid #f1f1f1;}
- 
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+@import url('https://rsms.me/inter/inter-ui.css');
+::selection {
+  background: #2D2F36;
 }
- 
-button {
-  background-color: #04AA6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
+::-webkit-selection {
+  background: #2D2F36;
 }
- 
-button:hover {
-  opacity: 0.8;
+::-moz-selection {
+  background: #2D2F36;
 }
- 
-.cancelbutton {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #f44336;
+body {
+  background: white;
+  font-family: 'Inter UI', sans-serif;
+  margin: 0;
+  padding: 20px;
 }
- 
+.page {
+  background: #e2e2e5;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 40px);
+  position: absolute;
+  place-content: center;
+  width: calc(100% - 40px);
+}
+@media (max-width: 767px) {
+  .page {
+    height: auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
 .container {
-  padding: 16px;
+  display: flex;
+  height: 320px;
+  margin: 0 auto;
+  width: 640px;
 }
- 
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
- 
-/* Change styles for span and cancel button
-   on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-  .cancelbutton {
-     width: 100%;
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    height: 630px;
+    width: 320px;
   }
 }
-</style>
-   
-<!-- End of css related code which we can have either in 
-     same jsp or separately also in a css file -->
- 
-<!-- Client side validations that need to be handled in javascript,
-      it can be handled in separate file or in same jsp -->
-<script type="text/javascript">
-function ValidateEmail(emailId)
-{
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(emailId.value.match(mailformat))
-    {
-        document.getElementById('password').focus();
-        return true;
-    }
-    else
-    {
-        alert("You have entered an invalid email address!");
-        document.getElementById('emailId').focus();
-        return false;
-    }
+.left {
+  background: white;
+  height: calc(100% - 40px);
+  top: 20px;
+  position: relative;
+  width: 50%;
 }
-</script>
+@media (max-width: 767px) {
+  .left {
+    height: 100%;
+    left: 20px;
+    width: calc(100% - 40px);
+    max-height: 270px;
+  }
+}
+.login {
+  font-size: 50px;
+  font-weight: 900;
+  margin: 50px 40px 40px;
+}
+.eula {
+  color: #999;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 40px;
+}
+.right {
+  background: #474A59;
+  box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+  color: #F1F1F2;
+  position: relative;
+  width: 50%;
+}
+@media (max-width: 767px) {
+  .right {
+    flex-shrink: 0;
+    height: 100%;
+    width: 100%;
+    max-height: 350px;
+  }
+}
+svg {
+  position: absolute;
+  width: 320px;
+}
+path {
+  fill: none;
+  stroke: url(#linearGradient);;
+  stroke-width: 4;
+  stroke-dasharray: 240 1386;
+}
+.form {
+  margin: 40px;
+  position: absolute;
+}
+label {
+  color:  #c2c2c5;
+  display: block;
+  font-size: 14px;
+  height: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+input {
+  background: transparent;
+  border: 0;
+  color: #f2f2f2;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+  outline: none !important;
+  width: 100%;
+}
+input::-moz-focus-inner { 
+  border: 0; 
+}
+#submit {
+  color: #707075;
+  margin-top: 40px;
+  transition: color 300ms;
+}
+#submit:focus {
+  color: #f2f2f2;
+}
+#submit:active {
+  color: #d0d0d2;
+}
 
-<!-- End of client side validations that need to be handled 
-     in javascript, it can be handled in separate file or in same jsp -->
+</style>
 </head>
 <body>
- 
-    <!-- We should have a servlet in order to process the form in
-          server side and proceed further -->
-    <form action="loginServlet" method="post" onSubmit="ValidateEmail(document.getElementById('emailId'))">
-         <div class="container">
-    <label for="username"><b>Email</b></label>
-    <input type="text" placeholder="Please enter your email" name="emailId" id = "emailId" required>
- 
-    <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Please enter Password" name="password" id="password" required>
-         
-    <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="rememberme"> Remember me
-    </label>
+<div class="page">
+  <div class="container">
+    <div class="left">
+      <div class="login">Login</div>
+      <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read</div>
+    </div>
+    <div class="right">
+      <svg viewBox="0 0 320 300">
+        <defs>
+          <linearGradient
+                          inkscape:collect="always"
+                          id="linearGradient"
+                          x1="13"
+                          y1="193.49992"
+                          x2="307"
+                          y2="193.49992"
+                          gradientUnits="userSpaceOnUse">
+            <stop
+                  style="stop-color:#ff00ff;"
+                  offset="0"
+                  id="stop876" />
+            <stop
+                  style="stop-color:#ff0000;"
+                  offset="1"
+                  id="stop878" />
+          </linearGradient>
+        </defs>
+        <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
+      </svg>
+      <div class="form">
+        <label for="email">Email</label>
+        <input type="email" id="email">
+        <label for="password">Password</label>
+        <input type="password" id="password">
+        <input type="submit" id="submit" value="Submit">
+      </div>
+    </div>
   </div>
- 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbutton">Cancel</button>
-    <span class="psw">Forgot <a href="<%=request.getContextPath()%>/forgotpassword.jsp">password?</a></span>
-  </div>
-    <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbutton">Administration Login</button>
-    <span class="psw">Forgot <a href="<%=request.getContextPath()%>/AdminLogin.jsp"></a></span>
-  </div>
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbutton">Create an Account</button>
-    <span class="psw">Forgot <a href="<%=request.getContextPath()%>/GuestRegistration.jsp"></a></span>
-  </div>
-    </form>
+</div>
+
 </body>
+<script>
+var current = null;
+document.querySelector('#email').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: 0,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '240 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+document.querySelector('#password').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: -336,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '240 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+document.querySelector('#submit').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: -730,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '530 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+</script>
 </html>

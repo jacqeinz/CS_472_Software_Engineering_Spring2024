@@ -21,8 +21,7 @@ public class Room implements Serializable {
     private String roomType;
     private int  price;
     private int floorNumber;
-    private List<String> bookedDates = new ArrayList<String>();
-    
+  
 	public String getRoomType() {
 		return roomType;
 	}
@@ -42,14 +41,6 @@ public class Room implements Serializable {
 		this.floorNumber = floorNumber;
 	}
 
-
-
-	public List<String> getBookedDates() {
-		return bookedDates;
-	}
-	public void setBookedDates(List<String> bookedDates) {
-		this.bookedDates = bookedDates;
-	}
 	public Long getId() {
 		return id;
 	}

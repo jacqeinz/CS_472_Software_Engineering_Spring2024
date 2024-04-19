@@ -8,38 +8,19 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>LandingBookingPage.jsp</welcome-file>
   </welcome-file-list>
+
+
   <servlet>
     <description></description>
-    <display-name>LoginServlet</display-name>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>org.eclipse.jakarta.hello.LoginServlet</servlet-class>
+    <display-name>GuestDashboard</display-name>
+    <servlet-name>GuestDashboard</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.GuestDashboard</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/LoginServlet</url-pattern>
-    <url-pattern>/CartServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>RoomList</display-name>
-    <servlet-name>RoomList</servlet-name>
-    <servlet-class>org.eclipse.jakarta.hello.RoomList</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RoomList</servlet-name>
-    <url-pattern>/RoomList</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>GuestWelcome</display-name>
-    <servlet-name>GuestWelcome</servlet-name>
-    <servlet-class>org.eclipse.jakarta.hello.GuestWelcome</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GuestWelcome</servlet-name>
-    <url-pattern>/GuestWelcome</url-pattern>
+    <servlet-name>GuestDashboard</servlet-name>
+    <url-pattern>/GuestDashboard</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
