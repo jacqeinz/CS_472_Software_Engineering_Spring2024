@@ -1,7 +1,10 @@
 package spring2024.cs472.hotelwebsite.entities;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class GraphicalView {
 
     public String generateHotelFloorPlanHTML(List<Room> rooms, List<RoomReservation> reservations) {
@@ -55,3 +58,4 @@ public class GraphicalView {
         return false;
     }
 }
+
