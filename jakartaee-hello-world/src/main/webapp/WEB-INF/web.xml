@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd ">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
   <servlet>
     <servlet-name>jakarta.ws.rs.core.Application</servlet-name>
   </servlet>
@@ -8,17 +8,58 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>LandingBookingPage.jsp</welcome-file>
   </welcome-file-list>
+
+
   <servlet>
     <description></description>
-    <display-name>LoginServlet</display-name>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>org.eclipse.jakarta.hello.LoginServlet</servlet-class>
+    <display-name>GuestDashboard</display-name>
+    <servlet-name>GuestDashboard</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.GuestDashboard</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/LoginServlet</url-pattern>
-    <url-pattern>/CartServlet</url-pattern>
+    <servlet-name>GuestDashboard</servlet-name>
+    <url-pattern>/GuestDashboard</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminDashboardServlet</display-name>
+    <servlet-name>AdminDashboardServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.AdminDashboardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDashboardServlet</servlet-name>
+    <url-pattern>/AdminDashboardServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminLoginServlet</display-name>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.AdminLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <url-pattern>/AdminLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminRegistrationServlet</display-name>
+    <servlet-name>AdminRegistrationServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.AdminRegistrationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminRegistrationServlet</servlet-name>
+    <url-pattern>/AdminRegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ConfirmationServlet</display-name>
+    <servlet-name>ConfirmationServlet</servlet-name>
+    <servlet-class>org.eclipse.jakarta.hello.ConfirmationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmationServlet</servlet-name>
+    <url-pattern>/ConfirmationServlet</url-pattern>
   </servlet-mapping>
 </web-app>

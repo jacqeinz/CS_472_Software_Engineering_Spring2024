@@ -48,11 +48,11 @@ public class RoomReservationResource {
     @Consumes("application/json")
     @Produces("application/json")
     public RoomReservation roomReservation(RoomReservation roomReservation) {
-        logger.info("Creating room reservation " + roomReservation.getRoomNumber());
+        logger.info("Creating room reservation " + roomReservation.getId());
         try{
             return roomReservationRepository.create(roomReservation);
         }catch (PersistenceException ex){
-            logger.info("Error creating roomreservation " + roomReservation.getRoomNumber());
+            logger.info("Error creating roomreservation " + roomReservation.getId());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
@@ -74,7 +74,7 @@ public class RoomReservationResource {
     @Consumes("application/json")
     @Produces("application/json")
     public RoomReservation update(RoomReservation roomReservation) {
-        logger.info("Updating room " + roomReservation.getRoomNumber());
+        logger.info("Updating room " + roomReservation.getId());
         try{
             return roomReservationRepository.create(roomReservation);
         }catch (PersistenceException ex){

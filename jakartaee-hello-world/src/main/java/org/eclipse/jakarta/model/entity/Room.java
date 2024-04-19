@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
 import java.util.*;
+
+
 @Entity
 public class Room implements Serializable {
     /**
@@ -16,10 +18,16 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomNumber;
-    private String  price;
+    private String roomType;
+    private int  price;
     private int floorNumber;
-    private List<Date> list = new ArrayList<Date>();
-    
+  
+	public String getRoomType() {
+		return roomType;
+	}
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
+	}
 	public String getRoomNumber() {
 		return roomNumber;
 	}
@@ -33,13 +41,6 @@ public class Room implements Serializable {
 		this.floorNumber = floorNumber;
 	}
 
-
-	public List<Date> getList() {
-		return list;
-	}
-	public void setList(List<Date> list) {
-		this.list = list;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -50,10 +51,10 @@ public class Room implements Serializable {
 	public void setName(String name) {
 		this.roomNumber = name;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

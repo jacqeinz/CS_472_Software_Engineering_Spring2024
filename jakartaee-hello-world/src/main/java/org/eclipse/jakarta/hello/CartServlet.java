@@ -36,10 +36,12 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         // We can able to get the form data by means of the below ways. 
         // Form arguments should be matched and then only they are recognised
-        // login.jsp component names should match and then only
+        // login.jsp component names should match and then onl
+    	String roomType = request.getParameter("roomtype");
           // by using request.getParameter, it is matched
-    	 HttpSession httpSession = request.getSession();
+    	HttpSession httpSession = request.getSession();
+    	httpSession.setAttribute("roomType", roomType);
             request.getRequestDispatcher("Confirmation.jsp").forward(request, response);
         }
-    
+
 }
