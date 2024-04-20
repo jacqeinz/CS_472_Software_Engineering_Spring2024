@@ -1,23 +1,103 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<style>
+
+    body{
+        margin: 0;
+        padding: 0;
+    }
+
+    .with-bg-size{
+        background-image: url('../logo.PNG');
+        width: 100%;
+        height: 275px;
+        background-position: center;
+        background-size: cover;
+    }
+
+    body{
+        text-align: center;
+    }
+
+    /*.header{*/
+    /*    !*padding: 0 0 10px;*!*/
+    /*    margin: 0;*/
+    /*    width: 100%;*/
+    /*    height: auto;*/
+    /*}*/
+
+    /*img{*/
+    /*    width: 100%;*/
+    /*    height: auto;*/
+    /*    overflow: hidden;*/
+    /*}*/
+
+    h2{
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 35px;
+        text-align: center;
+        justify-content: center;
+    }
+    tr{
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+    }
+    tr:hover td{
+        background-color: #42ddf5;
+    }
+    table{
+        align-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+    }
+    td{
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 5px 15px 5px 15px;
+        font-size: 25px;
+        justify-content: center;
+        text-align: center;
+    }
+    th{
+        align-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 15px;
+    }
+    button{
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 25px;
+        padding: 14px 40px;
+    }
+    .center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+</head>
+
+<body>
+<div class="with-bg-size"></div>
+
 <div th:switch="${Rooms}">
     <h2 th:case="null">No users yet!</h2>
     <div th:case="*">
-        <h2>Rooms</h2>
+        <h2>Current Rooms</h2>
         <table>
-            <thead>
-            <tr>
-                <th>Room Type</th>
-                <th>Room Number</th>
-                <th>Room Price</th>
-                <th>Floor Number</th>
-            </tr>
-            </thead>
             <tbody>
             <tr th:each="Room : ${Rooms}">
                 <td th:text="${Room.getRoomType()}"></td>
                 <td th:text="${Room.getRoomNumber()}"></td>
-                <td th:text="${Room.getPrice()}"></td>
+                <td th:text="'$'+ ${Room.getPrice()}"></td>
                 <td th:text="${Room.getFloorNumber()}"></td>
                 <td><a th:href="@{/edit/{id}(id=${Room.id})}">Edit</a></td>
                 <td><a th:href="@{/delete/{id}(id=${Room.id})}">Delete</a></td>
@@ -25,21 +105,7 @@
             </tbody>
         </table>
     </div>
-    <p><a href="/signup">Add a new Room</a></p>
+    <div class="center"><p><a href="/signup"><button>Add a new Room</button></a></p></div>
 </div>
-
-<!--/*@thymesVar id="Room" type="java"*/-->
-<!--<form action="#"-->
-<!--      th:action="@{/update/{id}(id=${Room.id()})}"-->
-<!--      th:object="${Room}"-->
-<!--      method="post">-->
-<!--    <label for="roomType">Room Number</label>-->
-<!--    <input type="text" th:field="*{roomType}" id="roomType" placeholder="Room Type">-->
-<!--    <span th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}"></span>-->
-<!--    <label for="roomType">Room Number</label>-->
-<!--    <input type="text" th:field="*{roomNumber}" id="roomNumber" placeholder="Room Number">-->
-<!--    <span th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></span>-->
-<!--    <input type="submit" value="Update Room">-->
-<!--</form>-->
-
+</body>
 </html>
