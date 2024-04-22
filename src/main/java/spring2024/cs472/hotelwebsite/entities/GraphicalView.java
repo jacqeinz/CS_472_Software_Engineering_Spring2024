@@ -28,11 +28,11 @@ public class GraphicalView {
         for (Room room : rooms) {
             html.append("<tr><td>Room ").append(room.getRoomNumber()).append("</td><td>");
 
-            // Check if the room is booked
-            boolean isBooked = isRoomBooked(room, reservations);
+            // Check if the room is occupied
+            boolean isOccupied = room.isOccupied();
 
-            // If the room is booked, mark it as red, otherwise mark it as green
-            String color = isBooked ? "red" : "green";
+            // If the room is occupied, mark it as red, otherwise mark it as green
+            String color = isOccupied ? "red" : "green";
             html.append("<div style='width: 50px; height: 50px; background-color: ").append(color).append("'></div>");
 
             html.append("</td></tr>");
@@ -44,18 +44,6 @@ public class GraphicalView {
 
         return html.toString();
     }
-
-    private boolean isRoomBooked(Room room, List<RoomReservation> reservations) {
-        if (reservations == null) {
-            return false;
-        }
-
-        for (RoomReservation reservation : reservations) {
-            if (reservation.getRoom().getRoomNumber().equals(room.getRoomNumber())) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
+
 
