@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import spring2024.cs472.hotelwebsite.entities.Room;
 import spring2024.cs472.hotelwebsite.repositories.RoomRepository;
 import spring2024.cs472.hotelwebsite.services.RoomService;
+
+import java.util.Optional;
 
 @Controller
 public class RoomController {
@@ -22,14 +21,14 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @GetMapping("/signup")
-    public String showSignUpForm(Room room, Model model){
-        model.addAttribute("Room", new Room());
-        return "addRoom";
-    }
+//    @GetMapping("/signup")
+//    public String addRoom(Room room, Model model){
+//        model.addAttribute("Room", room);
+//        return "addRoom1";
+//    }
 
-    @PostMapping("/addRoom")
-    public String addRoom(@ModelAttribute("Room") Room room, BindingResult result, Model model){
+    @RequestMapping(value="/addRoom", method=RequestMethod.POST)
+    public String addRoom(@ModelAttribute("Room") Room room, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "addRoom";
         }
@@ -37,11 +36,23 @@ public class RoomController {
         return "redirect:/RoomIndex";
     }
 
+    @ModelAttribute(value="Room")
+    public Room getRoom(){
+        return new Room();
+    }
+
     @GetMapping("/RoomIndex")
     public String showRoomList(Model model){
         model.addAttribute("Rooms", roomService.getAllRooms());
         return "RoomIndex";
     }
+
+//    @GetMapping("/getOne/{id}")
+//    public Room getOneRoom(@PathVariable int id, Model model){
+//        Room room = roomService.getRoomById(id);
+//        model.addAttribute("Room", room);
+//        return roomService.getRoomById(id);
+//    }
 
     @GetMapping("/edit/{id}")
     public String
