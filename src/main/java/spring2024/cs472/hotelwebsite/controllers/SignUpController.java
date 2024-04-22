@@ -45,7 +45,7 @@ public class SignUpController {
         return "SignUpAdmin";
     }
 
-    @PostMapping("/SignUpAdmihn")
+    @PostMapping("/SignUpAdmin")
     public String signUpAdmin(@ModelAttribute("Admin") Admin admin, Model model, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "SignUpAdmin";
@@ -60,7 +60,7 @@ public class SignUpController {
         model.addAttribute("Admins", accountRepository.findAll());
         return "AccountIndex";
     }
-    @GetMapping("/edit/{id}")
+    @GetMapping("/admin/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Admin admin = (Admin) accountRepository.findById(id);
 //                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
@@ -68,7 +68,7 @@ public class SignUpController {
         model.addAttribute("admin", admin);
         return "updateAdmin";
     }
-    @PostMapping("/update/{id}")
+    @PostMapping("/admin/update/{id}")
     public String updateAdmin(@PathVariable("id") long id, Admin admin,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -80,7 +80,7 @@ public class SignUpController {
         return "redirect:/updateAdmin?id=" + id;
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/admin/delete/{id}")
     public String deleteAdmin(@PathVariable("id") long id, Model model) {
         Admin admin = (Admin) accountRepository.findById(id);
 //                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));

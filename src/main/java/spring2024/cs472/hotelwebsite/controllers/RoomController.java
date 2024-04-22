@@ -54,7 +54,7 @@ public class RoomController {
 //        return roomService.getRoomById(id);
 //    }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/room/edit/{id}")
     public String
     showUpdateForm(@PathVariable int id, Model model){
         Room room = roomService.getRoomById(id);
@@ -62,13 +62,13 @@ public class RoomController {
         return "updateRoom";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/room/update/{id}")
     public String updateRoom(@PathVariable int id, Room room, BindingResult result, Model model){
         roomService.saveRoom(room);
         return "redirect:/RoomIndex";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/room/delete/{id}")
     public String
     deleteRoom(@PathVariable int id, Model model){
         Room room=roomService.getRoomById(id);
