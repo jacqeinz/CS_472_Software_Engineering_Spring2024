@@ -98,6 +98,10 @@ public class Account {
     }
 
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void add(Account account) {
         this.id += account.getId();
         this.Name += account.getName();
@@ -109,4 +113,7 @@ public class Account {
         this.userPassword += account.getUserPassword();
 
     }
+
+
+
 }
