@@ -25,10 +25,15 @@ public class InitService {
 
     public void init() {
         if(!isInitialized) {
+            Admin admin = new Admin(true,123456);
+            admin.setUserName("TestAdmin");
+            admin.setUserPassword("password");
+            admin.setName("John Doe");
             Guest guest = new Guest("Test Guest", "101 West FakeStreet, Fakeville, FK 11111",
                     "2/2/2002", "test@test.test", "555-555-5555", "TestGuest",
                     "password", "1111-2222-3333-4444");
             accountService.save(guest);
+            accountService.save(admin);
             String[] roomNumbers = {"101", "102", "103", "104", "105", "106", "107", "108", "109",
             "110", "111", "112", "113", "201", "202", "203", "204", "205", "206", "207",
             "208", "301", "302", "303"};
