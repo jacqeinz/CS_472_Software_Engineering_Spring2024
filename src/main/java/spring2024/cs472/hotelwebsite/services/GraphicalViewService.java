@@ -36,7 +36,6 @@ public class GraphicalViewService {
         for (int i = 1; i <= 10; i++) {
             Room room = new Room();
             // Set the ID as a Long value
-            room.setId((long) i);
             room.setRoomNumber("Room " + i);
             // Randomly assign some rooms as occupied and others as vacant
             boolean isOccupied = random.nextBoolean();
