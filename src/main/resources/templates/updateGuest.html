@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html
         xmlns:th="http://thymeleaf.org">
 
@@ -23,13 +23,13 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>Sign Up</h2>
-        <p class="lead">Make Changes to Account</p>
+        <p class="lead">Please enter your details in order to create your account so that you will be able to make room reservations, view past reservations and make changes to existing reservations.</p>
     </div>
 
 
     <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Personal Information</h4>
-        <form action="#"  th:action="@{/admin/edit/{id}(id=${admin.id})}" th:object="${admin}"  method="post">
+        <form action="#"  th:action="@{/guest/update}" th:object="${guest}"  method="post">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="name">Full Name</label>
@@ -43,11 +43,7 @@
 
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="employeeId">Employee ID</label>
-                <input type="text" th:field="*{employeeId}" id="employeeId" placeholder="Employee ID">
 
-            </div>
             <div class="mb-3">
                 <label for="userName">Username</label>
 
@@ -74,15 +70,18 @@
                 <input type="text" th:field="*{homeAddress}" id="homeAddress" placeholder="Home Address">
 
             </div>
+            <div class="mb-3">
+                <label for="paymentInfo" >Enter Your Payment Info for a Faster Checkout Process</label>
+                <input type="text" th:field="*{paymentInfo}" id="paymentInfo" placeholder="5555-5555-5555-5555">
+            </div>
 
             <div class="mb-3">
                 <label for="phoneNumber">Phone Number <span class="text-muted"></span></label>
                 <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="555-555-5555">
 
             </div>
-
             <hr class="mb-4">
-            <input type="submit" value="Update Admin Account"/>
+            <input type="submit"  value="Submit Changes"/>
         </form>
     </div>
 

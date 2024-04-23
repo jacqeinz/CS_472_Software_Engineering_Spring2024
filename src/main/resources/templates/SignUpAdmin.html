@@ -29,7 +29,7 @@
 
     <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Personal Information</h4>
-        <form action="#"  th:action="@{/SignUpAdmin}" th:object="${Admin}"  method="post">
+        <form action="#"  th:action="@{/SignUpAdmin}" th:object="${admin}"  method="post">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="name">Full Name</label>
@@ -65,7 +65,7 @@
 
             <div class="mb-3">
                 <label for="userPassword"> User Password</label>
-                <input type="text" th:field="*{userPassword}" id="userPassword" placeholder="User Password">
+                <input type="password" th:field="*{userPassword}" id="userPassword" placeholder="User Password">
 
             </div>
 
@@ -73,10 +73,6 @@
                 <label for="homeAddress">Home Address<span class="text-muted"></span></label>
                 <input type="text" th:field="*{homeAddress}" id="homeAddress" placeholder="Home Address">
 
-            </div>
-            <div class="mb-3">
-                <label for="paymentInfo" >Enter Your Payment Info for a Faster Checkout Process</label>
-                <input type="text" th:field="*{paymentInfo}" id="paymentInfo" placeholder="5555-5555-5555-5555">
             </div>
 
             <div class="mb-3">

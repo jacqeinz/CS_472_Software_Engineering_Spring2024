@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import spring2024.cs472.hotelwebsite.entities.Account;
 import spring2024.cs472.hotelwebsite.entities.Admin;
+import spring2024.cs472.hotelwebsite.entities.Room;
 import spring2024.cs472.hotelwebsite.repositories.AccountRepository;
 import spring2024.cs472.hotelwebsite.entities.Guest;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +43,7 @@ public class SignUpController {
 
     @GetMapping("SignUpAdmin")
     public String signUpAdmin(Model model) {
+        model.addAttribute("admin", new Admin());
         return "SignUpAdmin";
     }
 
@@ -57,7 +59,7 @@ public class SignUpController {
     }
     @GetMapping("/AccountIndex")
     public String showUserList(Model model) {
-        model.addAttribute("Admins", accountRepository.findAll());
+        model.addAttribute("Admins", accountService.getAllAdmins());
         return "AccountIndex";
     }
     @GetMapping("/admin/edit/{id}")
@@ -68,23 +70,44 @@ public class SignUpController {
         model.addAttribute("admin", admin);
         return "updateAdmin";
     }
-    @PostMapping("/admin/update/{id}")
+    @PostMapping("/admin/edit/{id}")
     public String updateAdmin(@PathVariable("id") long id, Admin admin,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
-            admin.setId(id);
-            return "AccountIndex";
+            return "updateAdmin";
         }
 
         accountRepository.save(admin);
-        return "redirect:/updateAdmin?id=" + id;
+        return "redirect:/AccountIndex";
     }
-
     @GetMapping("/admin/delete/{id}")
     public String deleteAdmin(@PathVariable("id") long id, Model model) {
         Admin admin = (Admin) accountRepository.findById(id);
 //                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         accountRepository.delete(admin);
-        return "AccountIndex";
+        return "redirect:/AccountIndex"
+                ;
     }
+
+    @GetMapping("/guest/edit")
+    public String showUpdateFormGuest( Model model, HttpSession session) {
+        model.addAttribute("guest", (Guest) session.getAttribute("guest"));
+        return "updateGuest";
+    }
+
+
+    @PostMapping("/guest/update")
+    public String updateGuest(@ModelAttribute("guest") Guest guest,
+                              BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+
+            return "redirect:/updateGuest";
+        }
+
+        accountRepository.save(guest);
+        session.setAttribute("guest", guest);
+        return "redirect:/guestDashboard";
+    }
+
+
 }

@@ -14,7 +14,7 @@
     }
 
     .with-bg-size{
-        background-image: url('../static/logo.PNG');
+        background-image: url('../logo.PNG');
         width: 100%;
         height: 275px;
         background-position: center;
@@ -91,9 +91,9 @@
                 <td th:text="${Room.getRoomNumber()}"></td>
                 <td th:text="'$'+ ${Room.getPrice()}"></td>
                 <td th:text="${Room.getFloorNumber()}"></td>
-                <td><a th:href="@{/edit/{id}(id=${Room.id})}">Edit</a></td>
+                <td><a th:href="@{/room/edit/{id}(id=${Room.id})}">Edit</a></td>
 <!--                <td><a th:href="@{/getOne/(id=${Room.id})}" class="btn btn-warning">Edit</a></td>-->
-                <td><a th:href="@{/delete/{id}(id=${Room.id})}">Delete</a></td>
+                <td><a th:href="@{/room/delete/{id}(id=${Room.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

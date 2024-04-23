@@ -1,4 +1,4 @@
-<form action="#" th:action="@{/update/{id}(id=${Room.id})}" th:object="${Room}" method="post">
+<form action="#" th:action="@{/room/update/{id}(id=${Room.id})}" th:object="${Room}" method="post">
 
     <label for="roomType">Room Type</label>
     <input type="text" th:field="*{roomType}" id="roomType" placeholder="Room Type">

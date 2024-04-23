@@ -21,9 +21,9 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model, HttpSession session) {
-        if(session.getAttribute("Guest") != null )
+        if(session.getAttribute("guest") != null )
             return "redirect:/guestDashboard";
-        else if (session.getAttribute("Admin") != null )
+        else if (session.getAttribute("admin") != null )
             return "redirect:/adminDashboard";
 
         initService.init();
