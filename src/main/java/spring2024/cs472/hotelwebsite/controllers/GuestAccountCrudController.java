@@ -11,29 +11,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import spring2024.cs472.hotelwebsite.entities.Guest;
 import spring2024.cs472.hotelwebsite.repositories.AccountRepository;
 import spring2024.cs472.hotelwebsite.services.AccountService;
-
 @Controller
-public class SignUpGuestController {
+public class GuestAccountCrudController {
     @Autowired
     private AccountRepository accountRepository;
     private AccountService accountService;
 
 
-    public SignUpGuestController(AccountService accountService) {this.accountService = accountService;}
-    @GetMapping("/SignUpGuest")
-    public String signUp(Guest guest, Model model) {
-        model.addAttribute("Guest", new Guest());
-        return "signUpGuest";
+    public GuestAccountCrudController(AccountService accountService) {this.accountService = accountService;}
+
+    @GetMapping("/guest/edit")
+    public String showUpdateFormGuest(Model model, HttpSession session) {
+        model.addAttribute("guest", (Guest) session.getAttribute("guest"));
+        return "updateGuest";
     }
 
-    @PostMapping("/SignUpGuest")
-    public String signUpGuest(@ModelAttribute("Guest") Guest guest, Model model, BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return "signUpGuest";
-        }
-        accountRepository.save(guest);
-        guest.add(guest);
-        return "redirect:/login";
 
+    @PostMapping("/guest/update")
+    public String updateGuest(@ModelAttribute("guest") Guest guest,
+                              BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+
+            return "redirect:/updateGuest";
+        }
+
+        accountRepository.save(guest);
+        session.setAttribute("guest", guest);
+        return "redirect:/guestDashboard";
     }
 }

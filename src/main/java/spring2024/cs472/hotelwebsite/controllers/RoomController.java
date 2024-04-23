@@ -1,6 +1,5 @@
 package spring2024.cs472.hotelwebsite.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import spring2024.cs472.hotelwebsite.entities.Room;
 import spring2024.cs472.hotelwebsite.repositories.RoomRepository;
 import spring2024.cs472.hotelwebsite.services.RoomService;
-
-import java.util.Optional;
 
 @Controller
 public class RoomController {
@@ -44,7 +41,7 @@ public class RoomController {
     @GetMapping("/RoomIndex")
     public String showRoomList(Model model){
         model.addAttribute("Rooms", roomService.getAllRooms());
-        return "RoomIndex";
+        return "roomIndex";
     }
 
 //    @GetMapping("/getOne/{id}")
@@ -54,7 +51,7 @@ public class RoomController {
 //        return roomService.getRoomById(id);
 //    }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/room/edit/{id}")
     public String
     showUpdateForm(@PathVariable int id, Model model){
         Room room = roomService.getRoomById(id);
@@ -62,13 +59,16 @@ public class RoomController {
         return "updateRoom";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/room/update/{id}")
     public String updateRoom(@PathVariable int id, Room room, BindingResult result, Model model){
+        if(result.hasErrors()) {
+            return "updateRoom";
+        }
         roomService.saveRoom(room);
         return "redirect:/RoomIndex";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/room/delete/{id}")
     public String
     deleteRoom(@PathVariable int id, Model model){
         Room room=roomService.getRoomById(id);
