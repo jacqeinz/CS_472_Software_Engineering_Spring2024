@@ -61,6 +61,9 @@ public class RoomController {
 
     @PostMapping("/room/update/{id}")
     public String updateRoom(@PathVariable int id, Room room, BindingResult result, Model model){
+        if(result.hasErrors()) {
+            return "updateRoom";
+        }
         roomService.saveRoom(room);
         return "redirect:/RoomIndex";
     }
