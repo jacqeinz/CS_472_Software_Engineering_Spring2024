@@ -31,6 +31,12 @@ public class LoginController {
         model.addAttribute("logout", false);
         return "login";
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("guest");
+        session.removeAttribute("admin");
+        return "redirect:/";
+    }
 
     @PostMapping("/login")
     public String loginPage(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
