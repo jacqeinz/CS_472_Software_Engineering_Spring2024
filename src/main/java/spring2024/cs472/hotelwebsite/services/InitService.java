@@ -30,7 +30,7 @@ public class InitService {
             admin.setUserPassword("password");
             admin.setName("John Doe");
             Guest guest = new Guest("Test Guest", "101 West FakeStreet, Fakeville, FK 11111",
-                    "2/2/2002", "test@test.test", "555-555-5555", "TestGuest",
+                    "2/2/2002", "DevonAlonzo72@gmail.com", "555-555-5555", "TestGuest",
                     "password", "1111-2222-3333-4444");
             accountService.save(guest);
             accountService.save(admin);

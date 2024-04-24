@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spring2024.cs472.hotelwebsite.entities.*;
+import spring2024.cs472.hotelwebsite.repositories.AccountRepository;
+import spring2024.cs472.hotelwebsite.repositories.TokenRepository;
 import spring2024.cs472.hotelwebsite.services.*;
 
 @Controller
@@ -18,6 +21,12 @@ public class LoginController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @GetMapping("/login")
     public String loginPage(Model model, HttpSession session) {
@@ -55,4 +64,43 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/forgotPassword")
+    public String forgotPassword() {
+        return "forgotPassword";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam String email, Model model, HttpSession session) {
+        Account account = accountRepository.findByEmail(email);
+        String result = "";
+        if (account != null) {
+            result = accountService.sendEmail(account);
+        }
+        if(result.equals("Success")){
+            return "redirect:/forgotPassword?success";
+        }
+        return"redirect:/login";
+    }
+
+    @GetMapping("/resetPassword/{token}")
+    public String resetPassword(@PathVariable String token, Model model, HttpSession session) {
+        PasswordResetToken reset = tokenRepository.findByToken(token);
+        if (reset != null && accountService.hasExpired(reset.getExpiryDateTime())) {
+            model.addAttribute("email", reset.getAccount().getEmail());
+            return "resetPassword";
+        }
+        return "redirect:/forgotPassword?error";
+    }
+
+    @PostMapping("/resetPassword/{token}")
+    public String resetPassword(@PathVariable String token, @RequestParam String email, Model model, HttpSession session) {
+        Account account = accountRepository.findByEmail(email);
+        if(account != null){
+            account.setUserPassword(account.getUserPassword());
+            accountRepository.save(account);
+        }
+        return "redirect:/login";
+    }
+
 }
+
