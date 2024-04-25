@@ -91,15 +91,16 @@
                 <td th:text="${Room.getRoomNumber()}"></td>
                 <td th:text="'$'+ ${Room.getPrice()}"></td>
                 <td th:text="${Room.getFloorNumber()}"></td>
-                <td><a th:href="@{/edit/{id}(id=${Room.id})}">Edit</a></td>
+                <td><a th:href="@{/room/edit/{id}(id=${Room.id})}">Edit</a></td>
 <!--                <td><a th:href="@{/getOne/(id=${Room.id})}" class="btn btn-warning">Edit</a></td>-->
-                <td><a th:href="@{/delete/{id}(id=${Room.id})}">Delete</a></td>
+                <td><a th:href="@{/room/delete/{id}(id=${Room.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#addModal">Add Room</button>
+<a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
 
 <form th:action="@{/addRoom}" th:object="${Room}" method="post">
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,11 +129,14 @@
                     <label for="floorNumber" class="col-form-label">Floor Number</label>
                     <input type="text" class="form-control" id="floorNumber" th:field="*{floorNumber}">
                 </div>
+                <a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Add Room</button>
+
             </div>
+
         </div>
     </div>
 </div>

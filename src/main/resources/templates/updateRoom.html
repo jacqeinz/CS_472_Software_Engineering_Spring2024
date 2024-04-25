@@ -1,4 +1,15 @@
-<form action="#" th:action="@{/update/{id}(id=${Room.id})}" th:object="${Room}" method="post">
+<!doctype html>
+<html
+        xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+
+</head>
+<body>
+<form action="#" th:action="@{/room/update/{id}(id=${Room.id})}" th:object="${Room}" method="post">
+
+    <input type="hidden" th:field="*{id}" name="roomId" id="roomId" />
 
     <label for="roomType">Room Type</label>
     <input type="text" th:field="*{roomType}" id="roomType" placeholder="Room Type">
@@ -16,5 +27,8 @@
     <input type="text" th:field="*{floorNumber}" id="floorNumber" placeholder="Floor Number">
     <span th:if="${#fields.hasErrors('floorNumber')}" th:errors="*{floorNumber}"></span>
 
-    <input type="submit" value="Update User">
+    <input type="submit" value="Update Room">
+    <a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
 </form>
+</body>
+</html>

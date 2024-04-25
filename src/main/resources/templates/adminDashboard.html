@@ -15,10 +15,11 @@
         <div class="card-body">
             <h3 th:text="'Welcome, '+${session.admin.name}"></h3>
             <a class="btn btn-primary" href="/RoomIndex">Update rooms </a>
+            <a class="btn btn-primary" href="/AccountIndex">View Admin Accounts</a>
             <a class="btn btn-primary" href="/floorplan">Print Reports </a> <!floor plan is just used as a place holer here>
         </div>
     </article>
-
+    <a class="button" href="/logout">Log Out</a>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
