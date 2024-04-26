@@ -1,7 +1,6 @@
 package spring2024.cs472.hotelwebsite.entities;
 
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
@@ -28,11 +27,11 @@ public class GraphicalView {
         for (Room room : rooms) {
             html.append("<tr><td>Room ").append(room.getRoomNumber()).append("</td><td>");
 
-            // Check if the room is occupied
-            boolean isOccupied = room.isOccupied();
+            // Check if the room is reserved
+            boolean isReserved = isRoomReserved(room, reservations);
 
-            // If the room is occupied, mark it as red, otherwise mark it as green
-            String color = isOccupied ? "red" : "green";
+            // If the room is reserved, mark it as red, otherwise mark it as green
+            String color = isReserved ? "red" : "green";
             html.append("<div style='width: 50px; height: 50px; background-color: ").append(color).append("'></div>");
 
             html.append("</td></tr>");
@@ -44,6 +43,13 @@ public class GraphicalView {
 
         return html.toString();
     }
+
+    private boolean isRoomReserved(Room room, List<RoomReservation> reservations) {
+        for (RoomReservation reservation : reservations) {
+            if (reservation.getRoom().equals(room)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
-
-
