@@ -11,4 +11,6 @@ import spring2024.cs472.hotelwebsite.entities.*;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findById(long id);
+
+    Account findByEmail(String email);
 }
