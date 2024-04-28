@@ -1,0 +1,34 @@
+<!doctype html>
+<html
+        xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+
+</head>
+<body>
+<form action="#" th:action="@{/roomReservationAdmin/update/{id}(id=${roomReservation.id})}" th:object="${RoomReservations}" method="post">
+
+    <input type="hidden" th:field="*{id}" name="roomReservationId" id="roomReservationId" />
+
+    <label for="guest">Guest</label>
+    <input type="text" th:field="*{guest}" id="guest" placeholder="guest">
+    <span th:if="${#fields.hasErrors('guest')}" th:errors="*{guest}"></span>
+
+    <label for="room">Room</label>
+    <input type="text" th:field="*{room}" id="room" placeholder="Room">
+    <span th:if="${#fields.hasErrors('room')}" th:errors="*{room}"></span>
+
+    <label for="total">Total</label>
+    <input type="text" th:field="*{total}" id="total" placeholder="total">
+    <span th:if="${#fields.hasErrors('total')}" th:errors="*{total}"></span>
+
+    <label for="dates">Dates</label>
+    <input type="date" th:field="*{dates}" id="dates" placeholder="dates">
+    <span th:if="${#fields.hasErrors('dates')}" th:errors="*{dates}"></span>
+
+    <input type="submit" value="Update Reservation">
+    <a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
+</form>
+</body>
+</html>

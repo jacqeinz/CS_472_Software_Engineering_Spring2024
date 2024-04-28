@@ -21,11 +21,7 @@ public class CartService {
     private ReservationDetailsRepository reservationDetailsRepository;
 
     public void addRoomReservations(Cart cart, List<Room> selectedRooms, LocalDate start, LocalDate end) {
-        long numOfDaysBetween = ChronoUnit.DAYS.between(start.atStartOfDay(), end.atStartOfDay());
-        List<LocalDate> dates = IntStream.iterate(0, i -> i + 1)
-                .limit(numOfDaysBetween)
-                .mapToObj(start::plusDays)
-                .toList();
+        List<LocalDate> dates = setupDateList(start, end);
         List<RoomReservation> roomReservations = new ArrayList<>();
         for (Room room : selectedRooms) {
             RoomReservation roomReservation = new RoomReservation(cart.getGuest(), room, dates);
@@ -41,6 +37,16 @@ public class CartService {
         guest.addCurrentReservation(reservationDetails);
         cart.emptyCart();
         return reservationDetails;
+    }
+
+    public List<LocalDate> setupDateList(LocalDate start, LocalDate end) {
+        long numOfDaysBetween = ChronoUnit.DAYS.between(start.atStartOfDay(), end.atStartOfDay());
+        return IntStream.iterate(0, i -> i + 1)
+                .limit(numOfDaysBetween)
+                .mapToObj(start::plusDays)
+                .toList();
+
+
     }
 
 

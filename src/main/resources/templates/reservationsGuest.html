@@ -13,10 +13,7 @@
 
     <article class="col-6 card">
         <div class="card-body">
-            <h3 th:text="'Welcome, '+${session.guest.name}"></h3>
-            <a class="btn btn-primary" href="/availableReservations">View Available Reservations</a>
-            <a class="btn btn-primary" href="/guest/edit">Update Account Details</a>
-
+            <h3 th:text="'These are your current Reservations, '+${session.guest.name}"></h3>
         </div>
     </article>
     <h3>Reservations:</h3>
@@ -33,13 +30,15 @@
             <a th:href="@{/updateReservationsGuest/edit/{id}(id=${item.id})}">Edit</a>
             <!--                <td><a th:href="@{/getOne/(id=${Room.id})}" class="btn btn-warning">Edit</a></td>-->
             <a th:href="@{/updateReservationsGuest/delete/{id}(id=${item.id})}">Delete</a>
-
         </article>
+
+        <!--                <td><a th:href="@{/getOne/(id=${Room.id})}" class="btn btn-warning">Edit</a></td>-->
 
 
     </div>
     <a class="button" href="/logout">Log Out</a>
-    <a class="button" href="/reservationsGuest">View Active Reservations</a>
+    <a class="button" href="/guestDashboard">Log Out</a>
+
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
