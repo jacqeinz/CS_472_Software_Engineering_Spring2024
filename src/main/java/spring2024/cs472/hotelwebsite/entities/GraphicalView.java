@@ -6,8 +6,8 @@ import java.util.List;
 @Component
 public class GraphicalView {
 
-    public String generateHotelFloorPlanHTML(List<Room> rooms, List<RoomReservation> reservations) {
-        if (rooms == null) {
+    public String generateHotelFloorPlanHTML(List<Room> allRooms, List<Room> availableRooms) {
+        if (allRooms == null) {
             // Handle the case where rooms list is null
             return "No rooms available";
         }
@@ -24,11 +24,11 @@ public class GraphicalView {
         html.append("<table border='1'>");
 
         // Loop through each room
-        for (Room room : rooms) {
+        for (Room room : allRooms) {
             html.append("<tr><td>Room ").append(room.getRoomNumber()).append("</td><td>");
 
             // Check if the room is reserved
-            boolean isReserved = isRoomReserved(room, reservations);
+            boolean isReserved = !availableRooms.contains(room);
 
             // If the room is reserved, mark it as red, otherwise mark it as green
             String color = isReserved ? "red" : "green";
@@ -42,14 +42,5 @@ public class GraphicalView {
         html.append("</html>");
 
         return html.toString();
-    }
-
-    private boolean isRoomReserved(Room room, List<RoomReservation> reservations) {
-        for (RoomReservation reservation : reservations) {
-            if (reservation.getRoom().equals(room)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
