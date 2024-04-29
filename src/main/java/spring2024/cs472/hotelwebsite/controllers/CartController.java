@@ -39,9 +39,7 @@ public class CartController {
         if(session.getAttribute("guest") == null) {
             return "redirect:/login";
         }
-        Guest guest = (Guest) session.getAttribute("guest");
-        Long id = cartService.checkoutCart(guest.getCart(), guest).getId();
-        return "redirect:/checkedOut?id="+id;
+        return "checkout";
     }
 //
 //    @PostMapping("/availableReservations/addToCart")
