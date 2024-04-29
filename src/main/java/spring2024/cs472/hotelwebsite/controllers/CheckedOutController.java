@@ -4,10 +4,15 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spring2024.cs472.hotelwebsite.entities.Guest;
+import spring2024.cs472.hotelwebsite.entities.ReservationDetails;
+import spring2024.cs472.hotelwebsite.entities.Room;
+import spring2024.cs472.hotelwebsite.entities.RoomReservation;
 import spring2024.cs472.hotelwebsite.repositories.ReservationDetailsRepository;
 
 @Controller
@@ -21,7 +26,6 @@ public class CheckedOutController {
         if(session.getAttribute("guest") == null) {
             return "redirect:/login";
         }
-        Guest guest = (Guest) session.getAttribute("guest");
         model.addAttribute("details", reservationDetailsRepository.findById(id));
         return "checkedOut";
     }

@@ -59,13 +59,13 @@
 
             <div class="mb-3">
                 <label for="email">Email</label>
-                <input type="text" th:field="*{email}" id="email" placeholder="Email">
+                <input type="text" th:field="*{email}" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Invalid email address">
 
             </div>
 
             <div class="mb-3">
                 <label for="userPassword"> User Password</label>
-                <input type="password" th:field="*{userPassword}" id="userPassword" placeholder="User Password">
+                <input type="password" th:field="*{userPassword}"  id="userPassword" placeholder="User Password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 
             </div>
 
@@ -102,9 +102,9 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../jquery-slim.min.js"><\/script>')</script>
-<script src="../static/popper.min.js"></script>
-<script src="../static/bootstrap.min.js"></script>
-<script src="../static/holder.min.js"></script>
+<script src="../popper.min.js"></script>
+<script src="../bootstrap.min.js"></script>
+<script src="../holder.min.js"></script>
 <script>
 
 </script>

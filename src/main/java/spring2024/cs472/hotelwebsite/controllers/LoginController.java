@@ -30,9 +30,9 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model, HttpSession session) {
-        if(session.getAttribute("guest") != null )
+        if (session.getAttribute("guest") != null)
             return "redirect:/guestDashboard";
-        else if (session.getAttribute("admin") != null )
+        else if (session.getAttribute("admin") != null)
             return "redirect:/adminDashboard";
 
         initService.init();
@@ -40,6 +40,7 @@ public class LoginController {
         model.addAttribute("logout", false);
         return "login";
     }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("guest");
@@ -76,10 +77,10 @@ public class LoginController {
         if (account != null) {
             result = accountService.sendEmail(account);
         }
-        if(result.equals("Success")){
+        if (result.equals("Success")) {
             return "redirect:/forgotPassword?success";
         }
-        return"redirect:/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/resetPassword/{token}")
@@ -93,14 +94,13 @@ public class LoginController {
     }
 
     @PostMapping("/resetPassword/{token}")
-    public String resetPassword(@PathVariable String token, @RequestParam String email, Model model, HttpSession session) {
+    public String resetPassword(@PathVariable String token, @RequestParam String password, @RequestParam String email) {
         Account account = accountRepository.findByEmail(email);
-        if(account != null){
-            account.setUserPassword(account.getUserPassword());
+        if (account != null) {
+            account.setUserPassword(password);
             accountRepository.save(account);
         }
         return "redirect:/login";
     }
-
 }
 

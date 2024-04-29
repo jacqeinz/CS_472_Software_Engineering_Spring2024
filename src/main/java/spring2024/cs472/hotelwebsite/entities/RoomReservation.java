@@ -20,7 +20,7 @@ public class RoomReservation implements Serializable {
 	private Room room;
 	private int total;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<LocalDate> dates = new ArrayList<LocalDate >();
 	
 	
@@ -67,6 +67,7 @@ public class RoomReservation implements Serializable {
 	}
 	public void setDates(List<LocalDate> dates) {
 		this.dates = dates;
+		setTotal(dates.size() * room.getPrice());
 	}
 
 
