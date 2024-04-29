@@ -29,6 +29,18 @@ public class RoomReservationService {
         return roomReservationRepository.findById(id);
     }
 
+    public ReservationDetails getDetailsByRoomReservationId(int id) {
+        List<ReservationDetails> details = reservationDetailsRepository.findAll();
+        for (ReservationDetails detail : details) {
+            for (RoomReservation roomReservation : detail.getRoomReservations()) {
+                if (roomReservation.getId() == id) {
+                    return detail;
+                }
+            }
+        }
+        return null;
+    }
+
 
 
     public ReservationDetails saveReservationDetails(ReservationDetails reservationDetails) {

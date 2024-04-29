@@ -30,9 +30,9 @@
                 <li th:each="date : ${item.dates}" th:text="${#temporals.format(date, 'MM/dd/yyyy')}"
                     class="list-group-item">02/31/2025</li>
             </ul>
-            <a th:href="@{/updateReservationsGuest/edit/{id}(id=${item.id})}">Edit</a>
+            <a th:href="@{/roomReservation/edit/{id}(id=${item.id})}">Edit</a>
             <!--                <td><a th:href="@{/getOne/(id=${Room.id})}" class="btn btn-warning">Edit</a></td>-->
-            <a th:href="@{/updateReservationsGuest/delete/{id}(id=${item.id})}">Delete</a>
+            <a th:href="@{/roomReservation/delete/{id}(id=${item.id})}">Delete</a>
 
         </article>
 

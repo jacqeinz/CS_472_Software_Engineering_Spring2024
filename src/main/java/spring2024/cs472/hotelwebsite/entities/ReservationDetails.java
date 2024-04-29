@@ -16,7 +16,7 @@ public class ReservationDetails implements Serializable {
 	@ManyToOne
 	private Guest guest;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<RoomReservation> roomReservations = new ArrayList<RoomReservation>();
 	private String paymentInformation;
 	private double total = 0;
@@ -58,6 +58,12 @@ public class ReservationDetails implements Serializable {
 		return id;
 	}
 	public void setId(Long id) { this.id = id; }
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
 
 
 }

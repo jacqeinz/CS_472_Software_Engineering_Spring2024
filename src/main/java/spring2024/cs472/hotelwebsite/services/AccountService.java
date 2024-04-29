@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import spring2024.cs472.hotelwebsite.entities.Account;
-import spring2024.cs472.hotelwebsite.entities.PasswordResetToken;
+import spring2024.cs472.hotelwebsite.entities.*;
 import spring2024.cs472.hotelwebsite.repositories.AccountRepository;
 import spring2024.cs472.hotelwebsite.repositories.TokenRepository;
-import spring2024.cs472.hotelwebsite.entities.Admin;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -85,5 +83,25 @@ public class AccountService {
      public boolean hasExpired(LocalDateTime expiryDateTime) {
      LocalDateTime currentDateTime = LocalDateTime.now();
      return expiryDateTime.isAfter(currentDateTime);
+     }
+
+     public boolean sendConfirmationEmail(Account account, ReservationDetails details) {
+         try {
+             SimpleMailMessage message = new SimpleMailMessage();
+             message.setTo(account.getEmail());
+             message.setSubject("ABCFG Hotel Reservation Confirmation");
+             StringBuilder builder = new StringBuilder();
+             builder.append("Thank you for reserving rooms at our hotel.\n")
+                     .append("Your purchase has been successfully confirmed.\n")
+                     .append("Total Price: ").append(details.getTotal()).append( "\n");
+
+             message.setText(builder.toString());
+
+             javaMailSender.send(message);
+             return true;
+         } catch (Exception e) {
+             e.printStackTrace();
+             return false;
+         }
      }
 }
