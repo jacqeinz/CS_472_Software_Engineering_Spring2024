@@ -65,6 +65,9 @@ public class Guest extends Account {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+    public String getName(){
+        return super.getName();
+    }
 
 
 
