@@ -3,6 +3,7 @@ package spring2024.cs472.hotelwebsite.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,13 @@ public class ReservationDetails implements Serializable {
 	}
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	public List<LocalDate> getReservationDates() {
+		List<LocalDate> reservationDates = new ArrayList<>();
+		for (RoomReservation roomReservation : roomReservations) {
+			reservationDates=roomReservation.getDates();
+		}
+		return reservationDates;
 	}
 
 
