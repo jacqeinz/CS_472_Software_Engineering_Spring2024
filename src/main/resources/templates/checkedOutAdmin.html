@@ -13,6 +13,7 @@
     <div class="row">
         <h3 th:if="${details.roomReservations.size()} eq 0">No items in cart.</h3>
         <article th:each="item : ${details.roomReservations}" class="col-4 card">
+            <input type="checkbox" th:value="${roomReservation.id}" name="selected">
             <h4 th:text="${item.room.roomNumber}">Room Number</h4>
             <h5 th:text="${item.total}">$$$</h5>
             <h5>Dates:</h5>
@@ -20,12 +21,13 @@
                 <li th:each="date : ${item.dates}" th:text="${#temporals.format(date, 'MM/dd/yyyy')}"
                     class="list-group-item">02/31/2025</li>
             </ul>
-
+    `
         </article>
 
     </div>
-    <a class="btn btn-primary" href="/availableReservations">View Available Reservations</a>
-    <a class="btn btn-primary" href="/guestDashboard">View Dashboard</a>
+    <a class="btn btn-primary" href="/availableReservationsAdmin">View Available Reservations</a>
+    <a class="btn btn-primary" href="/adminDashboard">View Dashboard</a>
+
 
 
 
