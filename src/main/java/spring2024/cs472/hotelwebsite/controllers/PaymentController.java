@@ -37,6 +37,7 @@ public class PaymentController {
     public String submitPayment(@ModelAttribute String creditCardNum, Model model, HttpSession session){
         Guest guest = (Guest) session.getAttribute("guest");
         Long id = cartService.checkoutCart(guest.getCart(), guest).getId();
+        accountRepository.save(guest);
         return "redirect:/checkedOut?id="+id;
     }
 }

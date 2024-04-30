@@ -47,7 +47,10 @@ public class ReservationsGuestController {
 
     @GetMapping("/roomReservation/edit/{id}")
     public String
-    showUpdateForm(@PathVariable int id, Model model){
+    showUpdateForm(@PathVariable int id, Model model, HttpSession session){
+        if(session.getAttribute("guest") == null) {
+            return "redirect:/login";
+        }
         RoomReservation roomReservation = roomReservationService.getRoomReservationById(id);
         model.addAttribute("roomReservation", roomReservation);
         Optional<LocalDate> startDate = roomReservation.getDates().stream().findFirst();
@@ -60,7 +63,10 @@ public class ReservationsGuestController {
     }
 
     @PostMapping("/roomReservation/update/{id}")
-    public String updateReservationsGuest(@PathVariable int id, @ModelAttribute("dates") RoomReservationDates dates, BindingResult result, Model model){
+    public String updateReservationsGuest(@PathVariable int id, @ModelAttribute("dates") RoomReservationDates dates, BindingResult result, Model model, HttpSession session){
+        if(session.getAttribute("guest") == null) {
+            return "redirect:/login";
+        }
         if(result.hasErrors()) {
             return "updateReservationsGuest";
         }
@@ -85,7 +91,10 @@ public class ReservationsGuestController {
 
     @GetMapping("/roomReservation/delete/{id}")
     public String
-    deleteReservationGuest(@PathVariable int id, Model model){
+    deleteReservationGuest(@PathVariable int id, Model model, HttpSession session){
+        if(session.getAttribute("guest") == null) {
+            return "redirect:/login";
+        }
         RoomReservation roomReservation = roomReservationService.getRoomReservationById(id);
         int total = roomReservation.getTotal();
         ReservationDetails details = roomReservationService.getDetailsByRoomReservationId(id);
