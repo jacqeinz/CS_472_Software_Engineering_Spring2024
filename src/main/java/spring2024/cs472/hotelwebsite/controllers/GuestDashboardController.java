@@ -21,7 +21,7 @@ public class GuestDashboardController {
             return "redirect:/login";
         }
         Guest oldGuest = (Guest) session.getAttribute("guest");
-        Guest freshGuest = (Guest) accountRepo.findById(oldGuest.getId()).orElse(null);
+        Guest freshGuest = (Guest) accountRepo.findById(oldGuest.getId()).orElse(oldGuest);
         session.setAttribute("guest", freshGuest);
         System.out.println(session.getAttribute("guest"));
         return "guestDashboard";
