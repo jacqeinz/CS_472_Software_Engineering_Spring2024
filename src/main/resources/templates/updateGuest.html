@@ -31,6 +31,7 @@
         <h4 class="mb-3">Personal Information</h4>
         <form action="#"  th:action="@{/guest/update}" th:object="${guest}"  method="post">
             <div class="row">
+                <input type="hidden" th:field="*{id}" name="guestId" id="guestId" />
                 <div class="col-md-6 mb-3">
                     <label for="name">Full Name</label>
                     <input type="text" th:field="*{name}" id="name" placeholder="Name">
