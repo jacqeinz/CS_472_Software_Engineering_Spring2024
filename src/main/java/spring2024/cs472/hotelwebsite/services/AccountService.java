@@ -104,4 +104,8 @@ public class AccountService {
              return false;
          }
      }
+
+    public int getById(int id) {
+        return id;
+    }
 }

@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
 
-    <title>Checkout example for Bootstrap</title>
+    <title>Update your Details</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap.min.css" rel="stylesheet">
@@ -22,8 +22,8 @@
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2>Sign Up</h2>
-        <p class="lead">Please enter your details in order to create your account so that you will be able to make room reservations, view past reservations and make changes to existing reservations.</p>
+        <h2>Change Account Details</h2>
+        <p class="lead">Please enter your details.</p>
     </div>
 
 
@@ -31,6 +31,7 @@
         <h4 class="mb-3">Personal Information</h4>
         <form action="#"  th:action="@{/guest/update}" th:object="${guest}"  method="post">
             <div class="row">
+                <input type="hidden" th:field="*{id}" name="guestId" id="guestId" />
                 <div class="col-md-6 mb-3">
                     <label for="name">Full Name</label>
                     <input type="text" th:field="*{name}" id="name" placeholder="Name">
@@ -83,7 +84,7 @@
             <hr class="mb-4">
             <input type="submit"  value="Submit Changes"/>
         </form>
-        <a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
+        <a class="button" href="/guestDashboard">Return to Guest Dashboard</a>
     </div>
 
 
@@ -101,7 +102,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="../jquery-slim.min.js"><\/script>')</script>
 <script src="../popper.min.js"></script>
 <script src="../bootstrap.min.js"></script>
 <script src="../holder.min.js"></script>

@@ -36,6 +36,8 @@ public class Guest extends Account {
         //this.pastReservations = pastReservations;
     }
 
+
+
     public Guest() {}
 
     public List<ReservationDetails> getCurrentReservations() {
