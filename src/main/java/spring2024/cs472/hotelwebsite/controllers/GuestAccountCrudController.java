@@ -5,14 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import spring2024.cs472.hotelwebsite.entities.Guest;
 import spring2024.cs472.hotelwebsite.repositories.AccountRepository;
 import spring2024.cs472.hotelwebsite.services.AccountService;
 @Controller
+@SessionAttributes("guest")
 public class GuestAccountCrudController {
     @Autowired
     private AccountRepository accountRepository;
@@ -25,12 +24,13 @@ public class GuestAccountCrudController {
     public String showUpdateFormGuest(Model model, HttpSession session) {
         model.addAttribute("guest", (Guest) session.getAttribute("guest"));
         return "updateGuest";
+
     }
 
 
     @PostMapping("/guest/update")
     public String updateGuest(@ModelAttribute("guest") Guest guest,
-                              BindingResult result, Model model, HttpSession session) {
+                              BindingResult result, Model model, HttpSession session, SessionStatus status) {
         if (result.hasErrors()) {
 
             return "redirect:/updateGuest";
@@ -38,6 +38,7 @@ public class GuestAccountCrudController {
 
         accountRepository.save(guest);
         session.setAttribute("guest", guest);
+        status.setComplete();
         return "redirect:/guestDashboard";
     }
 }
