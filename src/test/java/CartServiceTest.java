@@ -1,5 +1,6 @@
 
 import static org.apache.coyote.http11.Constants.a;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -72,14 +73,18 @@ class CartServiceTest {
     private AccountService accountService;
 
     @MockBean
-    private ReservationDetailsRepository reservationDetailsRepository;
+    private AccountRepository accountRepository;
 
+    @MockBean
+    private ReservationDetailsRepository reservationDetailsRepository;
+    @Test
     public void addRoomReservationReturnSuccess() {
 
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
         LocalDate start = LocalDate.now().plusDays(2);
         LocalDate end = LocalDate.now().plusDays(5);
         Room room = new Room("505", "Deluxe", 200, 5);
@@ -88,8 +93,7 @@ class CartServiceTest {
         when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
 
         cartService.addRoomReservations(guest.getCart(), List.of(room), start, end);
-
-
+        assertEquals(1, guest.getCart().getCartSize());
 
 
 
