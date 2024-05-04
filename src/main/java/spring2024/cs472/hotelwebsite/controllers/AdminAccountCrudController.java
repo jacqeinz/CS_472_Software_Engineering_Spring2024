@@ -34,7 +34,7 @@ public class AdminAccountCrudController {
     }
     @PostMapping("/admin/edit/{id}")
     public String updateAdmin(@PathVariable("id") long id, Admin admin,
-                              BindingResult result, Model model) {
+                              BindingResult result) {
         if (result.hasErrors()) {
             return "updateAdmin";
         }
