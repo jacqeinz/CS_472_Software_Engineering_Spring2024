@@ -1,5 +1,6 @@
 package spring2024.cs472.hotelwebsite;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -31,11 +32,52 @@ class RoomServiceTest {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private RoomRepository roomRepo;
+
     @MockBean
     private RoomRepository roomRepository;
 
     @MockBean
     private RoomReservationRepository roomReservationRepository;
+
+    @Test
+    public void testGetAllRoomsSuccess(){
+        Room room = new Room("420", "TestRoom", 500, 42);
+        roomService.saveRoom(room);
+        List<Room> rooms = List.of(room);
+        when(roomRepository.findAll()).thenReturn(rooms);
+        assertThat(rooms).contains(room);
+    }
+
+    @Test
+    public void testGetAllRoomsFails(){
+        Room room1 = new Room("420", "TestRoom", 500, 42);
+        Room room2 = new Room("69", "TestRoom2", 500, 42);
+        roomService.saveRoom(room1);
+        List<Room> rooms = List.of(room1);
+        when(roomRepository.findAll()).thenReturn(rooms);
+        assertThat(rooms).doesNotContain(room2);
+    }
+
+    @Test
+    public void testGetRoomsByAvailability(){
+        var startDate=LocalDate.of(2025,12,1);
+        var endDate=LocalDate.of(2025,12,31);
+        List<Room> rooms = roomRepo.findAll();
+        List<Room> available= roomService.getRoomsByAvailability(startDate, endDate);
+        assertThat(available).isEqualTo(rooms);
+    }
+
+    @Test
+    public void testGetRoomsByAvailabilityFails(){
+        var startDate=LocalDate.now();
+        var endDate=startDate.plusDays(1);
+        Room room=roomService.getRoomByRoomNumber("103");
+        List<Room> rooms = roomRepo.findAll();
+        List<Room> available= roomService.getRoomsByAvailability(startDate, endDate);
+        assertThat(available).doesNotContain(room);
+    }
 
     @Test
     public void getAllRoomsShouldReturnAllRooms() {
@@ -74,7 +116,6 @@ class RoomServiceTest {
         assertEquals(1, result.size());
         assertEquals("102", result.get(0).getRoomNumber());
     }
-
 
     @Test
     public void getRoomByIdShouldReturnRoom() {
@@ -120,3 +161,4 @@ class RoomServiceTest {
         assertNull(result);
     }
 }
+
