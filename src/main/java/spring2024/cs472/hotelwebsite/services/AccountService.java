@@ -47,6 +47,10 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public void delete(Account account) {
+        accountRepository.delete(account);
+    }
+
      public String sendEmail(Account account) {
         try {
             String resetLink = generateResetToken(account);

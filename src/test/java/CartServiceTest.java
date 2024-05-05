@@ -1,14 +1,14 @@
 
 import static org.apache.coyote.http11.Constants.a;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.validation.BindingResultUtils.getBindingResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-
-
 import java.beans.PropertyEditor;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -16,10 +16,10 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +34,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -53,6 +54,8 @@ import spring2024.cs472.hotelwebsite.repositories.ReservationDetailsRepository;
 import spring2024.cs472.hotelwebsite.repositories.RoomReservationRepository;
 import spring2024.cs472.hotelwebsite.services.AccountService;
 import spring2024.cs472.hotelwebsite.services.CartService;
+import spring2024.cs472.hotelwebsite.services.RoomReservationService;
+import spring2024.cs472.hotelwebsite.services.RoomService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -71,27 +74,78 @@ class CartServiceTest {
     @MockBean
     private AccountService accountService;
 
+    @Autowired
+    RoomReservationService roomReservationService;
+
+    @MockBean
+    private AccountRepository accountRepository;
+
     @MockBean
     private ReservationDetailsRepository reservationDetailsRepository;
 
+    @MockBean
+    JavaMailSender javaMailSender;
+
+    @Test
     public void addRoomReservationReturnSuccess() {
 
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
         LocalDate start = LocalDate.now().plusDays(2);
         LocalDate end = LocalDate.now().plusDays(5);
         Room room = new Room("505", "Deluxe", 200, 5);
         RoomReservation returnedRoomReservation;
+        when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
+        cartService.addRoomReservations(guest.getCart(), List.of(room), start, end);
+        assertEquals(1, guest.getCart().getCartSize());
+
+    }
+
+    @Test
+    public void checkoutCartReturnSuccess() {
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        LocalDate start = LocalDate.now().plusDays(2);
+        LocalDate end = LocalDate.now().plusDays(5);
+        Room room = new Room("505", "Deluxe", 200, 5);
 
         when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(accountService.sendConfirmationEmail(any(Account.class), any(ReservationDetails.class))).thenReturn(true);
+
+        ArgumentCaptor<Account> capturedAccount = ArgumentCaptor.forClass(Account.class);
+        ArgumentCaptor<ReservationDetails> capturedReservationDetails = ArgumentCaptor.forClass(ReservationDetails.class);
 
         cartService.addRoomReservations(guest.getCart(), List.of(room), start, end);
 
+        accountRepository.save(accounts.get(0));
+        ReservationDetails reservationDetails = cartService.checkoutCart(guest.getCart(), guest);
+
+        verify(accountService).sendConfirmationEmail(capturedAccount.capture(), capturedReservationDetails.capture());
+        Account capAccount = capturedAccount.getValue();
+        ReservationDetails capDetails = capturedReservationDetails.getValue();
 
 
+        assertThat(reservationDetails, is(in(guest.getCurrentReservations())));
+        assertEquals(capDetails, reservationDetails);
+        assertEquals(capAccount, guest);
 
+    }
+
+    @Test
+    public void setupDateListReturnsCorrectDateArray() {
+        LocalDate start = LocalDate.now().plusDays(2);
+        LocalDate end = LocalDate.now().plusDays(10);
+
+        List<LocalDate> dates = cartService.setupDateList(start, end);
+        assertNotNull(dates);
+        assertEquals(dates.size(), 8);
 
     }
 
