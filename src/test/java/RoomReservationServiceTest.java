@@ -1,4 +1,8 @@
+/**
+ * RoomReservationServiceTest.java
+ */
 
+// Imports necessary for the class
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,6 +58,12 @@ import spring2024.cs472.hotelwebsite.services.CartService;
 import spring2024.cs472.hotelwebsite.services.RoomReservationService;
 import spring2024.cs472.hotelwebsite.services.RoomService;
 
+/**
+ * Test class for the RoomReservationServiceTest.
+ * This class tests various methods of the RoomReservationServiceTest class.
+ *
+ * @author Team ABCFG
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringBootTest(
@@ -61,27 +71,29 @@ import spring2024.cs472.hotelwebsite.services.RoomService;
         classes = HotelWebsiteApplication.class)
 class RoomReservationServiceTest {
 
+    // Attributes
     @Autowired
     private RoomReservationService roomReservationService;
-
     @Autowired
     private CartService cartService;
-
     @MockBean
     private ReservationDetailsRepository reservationDetailsRepository;
-
     @MockBean
     private RoomReservationRepository roomReservationRepository;
-
     @MockBean
     private AccountRepository accountRepository;
 
+    /**
+     * Test case to verify that getting reservation details by room reservation ID returns the correct details.
+     */
     @Test
     public void getDetailsByRoomReservationIdReturnsDetails() {
+        // Create a guest account
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -94,6 +106,7 @@ class RoomReservationServiceTest {
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository and service behavior
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -103,6 +116,7 @@ class RoomReservationServiceTest {
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations to the cart and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -115,20 +129,26 @@ class RoomReservationServiceTest {
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Add reservation details to the list
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
 
+        // Assertion
         assertEquals(roomReservationService.getDetailsByRoomReservationId(6), details2);
-
-
     }
+
+    /**
+     * Test case to verify that retrieving all room reservation details is successful.
+     */
     @Test
     public void getAllRoomReservationDetailsSuccess() {
+        // Create a guest account
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -141,6 +161,7 @@ class RoomReservationServiceTest {
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository and service behavior
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -150,6 +171,7 @@ class RoomReservationServiceTest {
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations to the cart and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -162,13 +184,12 @@ class RoomReservationServiceTest {
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Add reservation details to the list
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
 
+        // Assertion
         assertNotNull(roomReservationService.getAllRoomReservations());
-
-
     }
-
 }
