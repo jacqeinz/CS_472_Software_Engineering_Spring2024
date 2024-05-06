@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class GraphicalViewService {
 
-    // Attributes
+    // Attribute
     private final GraphicalView graphicalView;
 
     /**
