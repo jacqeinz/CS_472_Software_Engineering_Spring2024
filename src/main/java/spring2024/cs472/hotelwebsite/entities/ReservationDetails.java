@@ -24,10 +24,8 @@ public class ReservationDetails implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@ManyToOne
 	private Guest guest;
-
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<RoomReservation> roomReservations = new ArrayList<RoomReservation>();
 	private String paymentInformation;
