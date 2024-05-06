@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"spring2024.cs472.hotelwebsite"},{"l":"spring2024.cs472.hotelwebsite.controllers"},{"l":"spring2024.cs472.hotelwebsite.entities"},{"l":"spring2024.cs472.hotelwebsite.repositories"},{"l":"spring2024.cs472.hotelwebsite.services"}];updateSearchResults();
