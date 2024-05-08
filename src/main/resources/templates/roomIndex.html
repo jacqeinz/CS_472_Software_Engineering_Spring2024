@@ -100,7 +100,7 @@
     </div>
 </div>
 <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#addModal">Add Room</button>
-<a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
+<a class="button" href="/dashboardAdmin">Return to Admin Dashboard</a>
 
 <form th:action="@{/addRoom}" th:object="${Room}" method="post">
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,7 +129,7 @@
                     <label for="floorNumber" class="col-form-label">Floor Number</label>
                     <input type="text" class="form-control" id="floorNumber" th:field="*{floorNumber}">
                 </div>
-                <a class="button" href="/adminDashboard">Return to Admin Dashboard</a>
+                <a class="button" href="/dashboardAdmin">Return to Admin Dashboard</a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
