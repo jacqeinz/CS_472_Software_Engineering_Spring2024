@@ -34,7 +34,7 @@ public class GuestDashboardController {
      * @param session The HttpSession object to retrieve guest information from the session.
      * @return The view name for displaying the guest dashboard.
      */
-    @GetMapping("/guestDashboard")
+    @GetMapping("/dashboardGuest")
     public String guestDashboard(Model model, HttpSession session) {
         if(session.getAttribute("guest") == null) {
             return "redirect:/login"; // Redirect to login page if guest is not logged in
@@ -43,6 +43,6 @@ public class GuestDashboardController {
         Guest freshGuest = (Guest) accountRepo.findById(oldGuest.getId()).orElse(oldGuest); // Refresh guest information from the database
         session.setAttribute("guest", freshGuest); // Update guest information in the session
         System.out.println(session.getAttribute("guest")); // Log guest information
-        return "guestDashboard"; // Display the guest dashboard
+        return "dashboardGuest"; // Display the guest dashboard
     }
 }
