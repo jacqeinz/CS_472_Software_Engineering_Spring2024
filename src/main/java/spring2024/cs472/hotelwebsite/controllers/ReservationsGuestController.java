@@ -135,7 +135,7 @@ public class ReservationsGuestController {
 
         reservationDetailsRepository.save(details);
 
-        return "redirect:/guestDashboard";
+        return "redirect:/dashboardGuest";
     }
 
     /**
@@ -172,6 +172,6 @@ public class ReservationsGuestController {
             details.setTotal(details.getTotal() - total);
             reservationDetailsRepository.save(details);
         }
-        return "redirect:/guestDashboard";
+        return "redirect:/dashboardGuest";
     }
 }
