@@ -25,13 +25,13 @@ public class AdminDashboardController {
      * @param session The HttpSession object to check the admin session.
      * @return The view name for the admin dashboard or a redirection to the login page if not logged in.
      */
-    @GetMapping("/adminDashboard")
+    @GetMapping("/dashboardAdmin")
     public String adminDashboard(Model model, HttpSession session) {
         if(session.getAttribute("admin") == null) {
             return "redirect:/login";
         }
         System.out.println(session.getAttribute("admin"));
-        return "adminDashboard";
+        return "dashboardAdmin";
     }
 
     /**

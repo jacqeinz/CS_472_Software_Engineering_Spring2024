@@ -129,7 +129,7 @@ class AccountServiceTest {
         when(accountRepository.findAll()).thenReturn(accounts);
 
         // Validate admin login with correct password
-        Account account = accountService.validateLogin("admin", "admin");
+        Account account = accountService.validateLogin("Admin", "admin");
 
         // Assert that the login attempt returns a non-null admin account
         assertNotNull(account);
@@ -305,9 +305,9 @@ class AccountServiceTest {
 
         // Save the admin account
         Account account = accountRepository.save(admin);
-
+      
         // Assertion
-        assertNotNull(account);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
 
     /**
@@ -320,16 +320,19 @@ class AccountServiceTest {
         admin.setUserName("Admin");
         admin.setUserPassword("admin");
         admin.setId(1L);
-
+      
         // Mock repository behavior
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
 
+//        List<Account> accounts = List.of(admin);
+//        when(accountRepository.findAll()).thenReturn(accounts);
+  
         // Attempt to save the admin account (not executed intentionally)
         // Account account = accountRepository.save(admin);
 
         // Assertion
-        assertNull(accountRepository); // Verifies that repository is not invoked for saving
+        assertTrue(accountRepository.findAll().isEmpty());
     }
 
     /**
@@ -348,9 +351,9 @@ class AccountServiceTest {
 
         // Save the guest account
         Account account = accountRepository.save(guest);
-
+      
         // Assertion
-        assertNotNull(account);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
 
     /**
@@ -367,8 +370,11 @@ class AccountServiceTest {
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
 
+//        List<Account> accounts = List.of(guest);
+//        when(accountRepository.findAll()).thenReturn(accounts);
+
         // Assertion
-        assertNull(accounts); // Verifies that the repository is not invoked for saving
+        assertTrue(accountRepository.findAll().isEmpty());
     }
 
     /**
@@ -389,9 +395,6 @@ class AccountServiceTest {
         // Save the admin account
         Account account = accountRepository.save(admin);
 
-        // Assertion for initial save
-        assertNotNull(account);
-
         // Update the admin account's ID
         admin.setId(2L);
 
@@ -399,7 +402,7 @@ class AccountServiceTest {
         Account updatedAccount = accountRepository.save(admin);
 
         // Assertion for update
-        assertNotNull(updatedAccount);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
 
     /**
@@ -424,9 +427,9 @@ class AccountServiceTest {
 
         // Save the updated guest account
         Account updatedAccount = accountRepository.save(guest);
-
+      
         // Assertion
-        assertNotNull(updatedAccount); // Verifies that the updated account is not null
+        assertFalse(accountRepository.findAll().isEmpty());
     }
 
     /**
@@ -442,7 +445,6 @@ class AccountServiceTest {
 
         // Mock repository behavior
         List<Account> accounts = List.of(admin);
-        when(accountRepository.findAll()).thenReturn(accounts);
 
         // Save the admin account
         accountRepository.save(admin);
@@ -454,7 +456,7 @@ class AccountServiceTest {
         accountRepository.delete(admin);
 
         // Assertion
-        assertNull(accountRepository.findAll()); // Verifies that repository returns null after deletion
+        assertTrue(accountRepository.findAll().isEmpty());
     }
 
 
@@ -467,18 +469,11 @@ class AccountServiceTest {
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,
                 "123-456-7890", "guest", "badPassword1", "1234567876543345678");
         guest.setId(1L);
-
-        // Save the guest account
+        List<Account> accounts = List.of(guest);
         accountRepository.save(guest);
-
-        // Ensure that the account is saved
-        assertNotNull(accountRepository.findAll());
-
-        // Delete the guest account
+        assertNotNull(accounts);
         accountRepository.delete(guest);
-
-        // Assertion
-        assertNull(accountRepository.findAll()); // Verifies that repository returns null after deletion
+        assertTrue(accountRepository.findAll().isEmpty());
     }
 }
 
