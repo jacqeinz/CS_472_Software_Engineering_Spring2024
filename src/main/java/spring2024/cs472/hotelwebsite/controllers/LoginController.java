@@ -46,9 +46,9 @@ public class LoginController {
     @GetMapping("/login")
     public String loginPage(Model model, HttpSession session) {
         if (session.getAttribute("guest") != null)
-            return "redirect:/guestDashboard"; // Redirect to guest dashboard if guest is logged in
+            return "redirect:/dashboardGuest"; // Redirect to guest dashboard if guest is logged in
         else if (session.getAttribute("admin") != null)
-            return "redirect:/adminDashboard"; // Redirect to admin dashboard if admin is logged in
+            return "redirect:/dashboardAdmin"; // Redirect to admin dashboard if admin is logged in
 
         initService.init(); // Initialize data
         model.addAttribute("error", false); // Add error attribute to model
@@ -86,10 +86,10 @@ public class LoginController {
             return "login"; // Display the login page with error message
         } else if (account instanceof Guest) {
             session.setAttribute("guest", (Guest) account); // Set guest attribute in session
-            return "redirect:/guestDashboard"; // Redirect to guest dashboard
+            return "redirect:/dashboardGuest"; // Redirect to guest dashboard
         } else if (account instanceof Admin) {
             session.setAttribute("admin", (Admin) account); // Set admin attribute in session
-            return "redirect:/adminDashboard"; // Redirect to admin dashboard
+            return "redirect:/dashboardAdmin"; // Redirect to admin dashboard
         }
         model.addAttribute("error", true); // Add error attribute to model
         return "login"; // Display the login page with error message

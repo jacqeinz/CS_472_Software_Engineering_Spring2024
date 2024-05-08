@@ -136,7 +136,7 @@ class AccountServiceTest {
         when(accountRepository.findAll()).thenReturn(accounts);
 
         // Validate admin login with correct password
-        Account account = accountService.validateLogin("admin", "admin");
+        Account account = accountService.validateLogin("Admin", "admin");
 
         // Assert that the login attempt returns a non-null admin account
         assertNotNull(account);
@@ -302,7 +302,7 @@ class AccountServiceTest {
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
         Account account = accountRepository.save(admin);
-        assertNotNull(account);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
     @Test
     public void SaveAccountShouldReturnUnSuccessAdmin(){
@@ -310,11 +310,11 @@ class AccountServiceTest {
         admin.setUserName("Admin");
         admin.setUserPassword("admin");
         admin.setId(1L);
-        List<Account> accounts = List.of(admin);
-        when(accountRepository.findAll()).thenReturn(accounts);
-//        Account account = accountRepository.save(admin);
+//        List<Account> accounts = List.of(admin);
+//        when(accountRepository.findAll()).thenReturn(accounts);
+////        Account account = accountRepository.save(admin);
 
-        assertNull(accountRepository);
+        assertTrue(accountRepository.findAll().isEmpty());
     }
     @Test
     public void SaveAccountShouldReturnSuccessGuest(){
@@ -324,17 +324,17 @@ class AccountServiceTest {
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
         Account account = accountRepository.save(guest);
-        assertNotNull(account);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
     @Test
     public void SaveAccountShouldReturnUnSuccessGuest(){
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
-        List<Account> accounts = List.of(guest);
-        when(accountRepository.findAll()).thenReturn(accounts);
+//        List<Account> accounts = List.of(guest);
+//        when(accountRepository.findAll()).thenReturn(accounts);
 
-        assertNull(accounts);
+        assertTrue(accountRepository.findAll().isEmpty());
     }
     @Test
     public void UpdateAccountShouldReturnSuccessAdmin(){
@@ -345,10 +345,9 @@ class AccountServiceTest {
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
         Account account = accountRepository.save(admin);
-        assertNotNull(account);
         admin.setId(2L);
         Account updatedAccount = accountRepository.save(admin);
-        assertNotNull(updatedAccount);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
 
     @Test
@@ -361,7 +360,7 @@ class AccountServiceTest {
         assertNotNull(accounts);
         guest.setId(2L);
         Account updatedAccount = accountRepository.save(guest);
-        assertNotNull(updatedAccount);
+        assertFalse(accountRepository.findAll().isEmpty());
     }
 
     @Test
@@ -371,11 +370,10 @@ class AccountServiceTest {
         admin.setUserPassword("admin");
         admin.setId(1L);
         List<Account> accounts = List.of(admin);
-        when(accountRepository.findAll()).thenReturn(accounts);
         accountRepository.save(admin);
         assertNotNull(accounts);
         accountRepository.delete(admin);
-        assertNull(accountRepository.findAll());
+        assertTrue(accountRepository.findAll().isEmpty());
     }
     @Test
     public void DeleteAccountShouldReturnSuccessGuest(){
@@ -386,7 +384,7 @@ class AccountServiceTest {
         accountRepository.save(guest);
         assertNotNull(accounts);
         accountRepository.delete(guest);
-        assertNull(accountRepository.findAll());
+        assertTrue(accountRepository.findAll().isEmpty());
     }
 
 

@@ -49,7 +49,7 @@ public class CartService {
             roomReservationRepository.save(roomReservation);
             roomReservations.add(roomReservation);
         }
-        cart.setRoomReservations(roomReservations);
+        cart.addRoomReservations(roomReservations);
     }
 
     /**
