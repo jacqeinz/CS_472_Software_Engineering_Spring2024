@@ -66,16 +66,16 @@ public class GuestAccountCrudController {
     @PostMapping("/guest/update")
     public String updateGuest(@ModelAttribute("guest") Guest guest,
                               BindingResult result, Model model, HttpSession session, SessionStatus status) {
-        if(session.getAttribute("guest") == null){
-            return "redirect:/login";
-        }
-        if (result.hasErrors()) {
-            return "redirect:/updateGuest"; // Redirect to the update guest form if there are validation errors
-        }
+//        if(session.getAttribute("guest") == null){
+//            return "redirect:/login";
+//        }
+//        if (result.hasErrors()) {
+//            return "redirect:/updateGuest"; // Redirect to the update guest form if there are validation errors
+//        }
 
         accountRepository.save(guest); // Save the updated guest information
         session.setAttribute("guest", guest); // Update guest information in the session
-        status.setComplete(); // Complete the session status
-        return "redirect:/guestDashboard"; // Redirect to the guest dashboard
+//        status.setComplete(); // Complete the session status
+        return "redirect:/dashboardGuest"; // Redirect to the guest dashboard
     }
 }
