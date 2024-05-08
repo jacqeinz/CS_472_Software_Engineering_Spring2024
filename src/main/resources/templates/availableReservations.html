@@ -13,11 +13,11 @@
     <form th:action="@{/availableReservations/filter}" method="post">
         <div class="mb-3">
             <label for="startDate" class="form-label">Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate">
+            <input type="date" class="form-control" id="startDate" name="startDate" th:value="${start}">
         </div>
         <div class="mb-3">
             <label for="endDate" class="form-label">End Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate">
+            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${end}">
         </div>
         <button type="submit" id="submit" class="btn btn-primary">Submit</button>
     </form>

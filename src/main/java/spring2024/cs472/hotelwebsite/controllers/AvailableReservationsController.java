@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spring2024.cs472.hotelwebsite.entities.Guest;
@@ -77,8 +78,6 @@ public class AvailableReservationsController {
      * @param model The Model object to add attributes for the view.
      * @param session The HttpSession object to check the guest session.
      * @param selectedRooms The list of IDs of selected rooms.
-     * @param start The start date for the reservation.
-     * @param end The end date for the reservation.
      * @return The redirect view name for the cart page.
      */
     @PostMapping("/availableReservations/addToCart")

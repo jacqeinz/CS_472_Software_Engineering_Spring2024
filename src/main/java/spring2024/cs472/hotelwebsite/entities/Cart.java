@@ -30,7 +30,7 @@ public class Cart implements Serializable {
 	@OneToOne
 	private Guest guest;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@Column(nullable = true)
 	private List<RoomReservation> roomReservations  = new ArrayList<RoomReservation>();
 
