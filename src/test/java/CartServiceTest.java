@@ -99,7 +99,7 @@ class CartServiceTest {
         // Create a guest account
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
-        guest.setId(1L);
+        guest.setId(Long.valueOf(1L));
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
         // Define start and end dates
@@ -125,7 +125,7 @@ class CartServiceTest {
 
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
-        guest.setId(1L);
+        guest.setId(Long.valueOf(1L));
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
         LocalDate start = LocalDate.now().plusDays(2);
@@ -146,7 +146,7 @@ class CartServiceTest {
         // Create a guest account
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
-        guest.setId(1L);
+        guest.setId(Long.valueOf(1L));
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
 
@@ -160,7 +160,7 @@ class CartServiceTest {
         // Mock the behavior of the repositories and service methods
         when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
-        when(accountService.sendConfirmationEmail(any(Account.class), any(ReservationDetails.class))).thenReturn(true);
+        when(accountService.sendConfirmationEmail(any(Account.class), any(ReservationDetails.class))).thenReturn(Boolean.valueOf(true));
 
         // Capture the account and reservation details passed to sendConfirmationEmail method
         ArgumentCaptor<Account> capturedAccount = ArgumentCaptor.forClass(Account.class);

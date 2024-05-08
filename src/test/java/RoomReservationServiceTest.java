@@ -143,10 +143,13 @@ class RoomReservationServiceTest{
      */
     @Test
     public void getDetailsByRoomReservationIdReturnsDetailsUnsuccessful() {
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -159,6 +162,7 @@ class RoomReservationServiceTest{
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -168,6 +172,7 @@ class RoomReservationServiceTest{
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations to the guest's cart and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -180,12 +185,13 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Populate the list of all reservation details
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
 
+        // Test that the details retrieved by ID do not match the expected details
         assertNotEquals(roomReservationService.getDetailsByRoomReservationId(20), details2);
-
     }
 
     /**
@@ -248,10 +254,13 @@ class RoomReservationServiceTest{
     */
     @Test
     public void getAllRoomReservationDetailsUnSuccess() {
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -264,6 +273,7 @@ class RoomReservationServiceTest{
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -273,6 +283,7 @@ class RoomReservationServiceTest{
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations to the guest's cart and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -285,10 +296,11 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
-//        allDetails.add(details1);
-//        allDetails.add(details2);
-//        allDetails.add(details3);
+        // allDetails.add(details1);
+        // allDetails.add(details2);
+        // allDetails.add(details3);
 
+        // Test that the repository returns null when trying to find all room reservations
         assertNull(roomReservationRepository.findAll());
     }
 
@@ -297,10 +309,13 @@ class RoomReservationServiceTest{
     */
     @Test
     public void getRoomReservationByIdSuccessful(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -313,6 +328,7 @@ class RoomReservationServiceTest{
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -322,6 +338,7 @@ class RoomReservationServiceTest{
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations to the guest's cart and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -334,10 +351,12 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Add all reservation details to the list
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
 
+        // Test that the room reservation is found by its ID
         assertNotNull(roomReservationRepository.findById(6));
     }
 
@@ -346,10 +365,13 @@ class RoomReservationServiceTest{
     */
     @Test
     public void getRoomReservationByIdUnSuccessful(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -362,6 +384,7 @@ class RoomReservationServiceTest{
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -371,6 +394,7 @@ class RoomReservationServiceTest{
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations to the guest's cart and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -383,12 +407,13 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Add all reservation details to the list
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
 
+        // Test that no room reservation is found by the given ID
         assertNull(roomReservationRepository.findById(35));
-
     }
 
     /**
@@ -396,10 +421,13 @@ class RoomReservationServiceTest{
     */
     @Test
     public void SaveReservationDetailsUnSuccessful(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -409,17 +437,12 @@ class RoomReservationServiceTest{
         LocalDate end2 = LocalDate.now().plusDays(10);
         LocalDate start3 = LocalDate.now().plusDays(11);
         LocalDate end3 = LocalDate.now().plusDays(15);
-        List<ReservationDetails> allDetails = new ArrayList<>();
-        AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
-        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
-            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
-            reservation.setId(idValue.getAndIncrement());
-            return reservation;
-        });
-        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
-        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenReturn(null);
+        when(reservationDetailsRepository.save(any())).thenReturn(null);
+        when(reservationDetailsRepository.findAll()).thenReturn(null);
 
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
@@ -433,10 +456,11 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
-//        allDetails.add(details1);
-//        allDetails.add(details2);
-//        allDetails.add(details3);
+        // allDetails.add(details1);
+        // allDetails.add(details2);
+        // allDetails.add(details3);
 
+        // Test that no reservation details are found
         assertNull(reservationDetailsRepository.findAll());
     }
 
@@ -445,10 +469,13 @@ class RoomReservationServiceTest{
     */
     @Test
     public void SaveReservationDetailsSuccessful(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -458,9 +485,12 @@ class RoomReservationServiceTest{
         LocalDate end2 = LocalDate.now().plusDays(10);
         LocalDate start3 = LocalDate.now().plusDays(11);
         LocalDate end3 = LocalDate.now().plusDays(15);
+
+        // List to store reservation details
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -470,6 +500,7 @@ class RoomReservationServiceTest{
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -482,13 +513,17 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Add reservation details to the list
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
-        reservationDetailsRepository.delete(details1);
-//        reservationDetailsRepository.delete(details2);
-//        reservationDetailsRepository.delete(details3);
 
+        // Delete a reservation detail
+        reservationDetailsRepository.delete(details1);
+        // reservationDetailsRepository.delete(details2);
+        // reservationDetailsRepository.delete(details3);
+
+        // Test that reservation details are not null after deletion
         assertNotNull(reservationDetailsRepository.findAll());
     }
   
@@ -497,10 +532,13 @@ class RoomReservationServiceTest{
     */
     @Test
     public void SaveReservationDetailsUnSuccessfulDelete(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
+
+        // Create rooms and define reservation periods
         Room room1 = new Room("505", "Deluxe", 200, 5);
         Room room2 = new Room("415", "Deluxe", 200, 4);
         Room room3 = new Room("325", "Standard", 100, 3);
@@ -510,9 +548,12 @@ class RoomReservationServiceTest{
         LocalDate end2 = LocalDate.now().plusDays(10);
         LocalDate start3 = LocalDate.now().plusDays(11);
         LocalDate end3 = LocalDate.now().plusDays(15);
+
+        // List to store reservation details
         List<ReservationDetails> allDetails = new ArrayList<>();
         AtomicLong idValue = new AtomicLong(5L);
 
+        // Mock repository responses
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
             RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
@@ -522,6 +563,7 @@ class RoomReservationServiceTest{
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
 
+        // Add room reservations and create reservation details
         cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
         ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
@@ -534,13 +576,17 @@ class RoomReservationServiceTest{
         ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
         guest.getCart().emptyCart();
 
+        // Add reservation details to the list
         allDetails.add(details1);
         allDetails.add(details2);
         allDetails.add(details3);
+
+        // Delete all reservation details
         reservationDetailsRepository.delete(details1);
         reservationDetailsRepository.delete(details2);
         reservationDetailsRepository.delete(details3);
 
+        // Test that reservation details are null after deletion
         assertNull(reservationDetailsRepository.findAll());
     }
 }

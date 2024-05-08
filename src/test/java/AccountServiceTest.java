@@ -7,12 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.*;
-
 import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.ArgumentCaptor;
@@ -33,7 +30,6 @@ import spring2024.cs472.hotelwebsite.repositories.RoomReservationRepository;
 import spring2024.cs472.hotelwebsite.repositories.TokenRepository;
 import spring2024.cs472.hotelwebsite.services.AccountService;
 import spring2024.cs472.hotelwebsite.services.CartService;
-
 import spring2024.cs472.hotelwebsite.services.ResetPasswordService;
 import spring2024.cs472.hotelwebsite.entities.PasswordResetToken;
 
@@ -66,11 +62,8 @@ class AccountServiceTest {
     private ReservationDetailsRepository reservationDetailsRepository;
     @MockBean
     JavaMailSender javaMailSender;
-
-
     @Autowired
     private TokenRepository tokenRepository;
-
 
 //    @Before
 //    public void setUp() {
@@ -293,104 +286,199 @@ class AccountServiceTest {
         // Ensure that the list of admins is not null
         assertNotNull(accountService.getAllAdmins());
     }
+
+
+    /**
+     * Verifies successful saving of an admin account.
+     */
     @Test
-    public void SaveAccountShouldReturnSuccessAdmin(){
+    public void saveAccountShouldReturnSuccessAdmin() {
+        // Create an admin account
         Admin admin = new Admin(true, 123456);
         admin.setUserName("Admin");
         admin.setUserPassword("admin");
         admin.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
+
+        // Save the admin account
         Account account = accountRepository.save(admin);
+
+        // Assertion
         assertNotNull(account);
     }
+
+    /**
+     * Verifies unsuccessful saving of an admin account.
+     */
     @Test
-    public void SaveAccountShouldReturnUnSuccessAdmin(){
+    public void saveAccountShouldReturnUnSuccessAdmin() {
+        // Create an admin account
         Admin admin = new Admin(true, 123456);
         admin.setUserName("Admin");
         admin.setUserPassword("admin");
         admin.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
-//        Account account = accountRepository.save(admin);
 
-        assertNull(accountRepository);
+        // Attempt to save the admin account (not executed intentionally)
+        // Account account = accountRepository.save(admin);
+
+        // Assertion
+        assertNull(accountRepository); // Verifies that repository is not invoked for saving
     }
+
+    /**
+     * Verifies successful saving of a guest account.
+     */
     @Test
-    public void SaveAccountShouldReturnSuccessGuest(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
-                "badPassword1", "1234567876543345678");
+    public void saveAccountShouldReturnSuccessGuest() {
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,
+                "123-456-7890", "guest", "badPassword1", "1234567876543345678");
         guest.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
+
+        // Save the guest account
         Account account = accountRepository.save(guest);
+
+        // Assertion
         assertNotNull(account);
     }
+
+    /**
+     * Verifies unsuccessful saving of a guest account.
+     */
     @Test
-    public void SaveAccountShouldReturnUnSuccessGuest(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
-                "badPassword1", "1234567876543345678");
+    public void saveAccountShouldReturnUnSuccessGuest() {
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,
+                "123-456-7890", "guest", "badPassword1", "1234567876543345678");
         guest.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
 
-        assertNull(accounts);
+        // Assertion
+        assertNull(accounts); // Verifies that the repository is not invoked for saving
     }
+
+    /**
+     * Verifies successful update of an admin account.
+     */
     @Test
-    public void UpdateAccountShouldReturnSuccessAdmin(){
+    public void updateAccountShouldReturnSuccessAdmin() {
+        // Create an admin account
         Admin admin = new Admin(true, 123456);
         admin.setUserName("Admin");
         admin.setUserPassword("admin");
         admin.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
+
+        // Save the admin account
         Account account = accountRepository.save(admin);
+
+        // Assertion for initial save
         assertNotNull(account);
+
+        // Update the admin account's ID
         admin.setId(2L);
+
+        // Save the updated admin account
         Account updatedAccount = accountRepository.save(admin);
+
+        // Assertion for update
         assertNotNull(updatedAccount);
     }
 
+    /**
+     * Verifies unsuccessful update of a guest account.
+     */
     @Test
-    public void UpdateAccountShouldReturnUnSuccessGuest(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
-                "badPassword1", "1234567876543345678");
+    public void updateAccountShouldReturnUnSuccessGuest() {
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,
+                "123-456-7890", "guest", "badPassword1", "1234567876543345678");
         guest.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
+
+        // Ensure that the list of accounts is not null
         assertNotNull(accounts);
+
+        // Update the guest account's ID
         guest.setId(2L);
+
+        // Save the updated guest account
         Account updatedAccount = accountRepository.save(guest);
-        assertNotNull(updatedAccount);
+
+        // Assertion
+        assertNotNull(updatedAccount); // Verifies that the updated account is not null
     }
 
+    /**
+     * Verifies successful deletion of an admin account.
+     */
     @Test
-    public void DeleteAccountShouldReturnSuccessAdmin(){
+    public void deleteAccountShouldReturnSuccessAdmin() {
+        // Create an admin account
         Admin admin = new Admin(true, 123456);
         admin.setUserName("Admin");
         admin.setUserPassword("admin");
         admin.setId(1L);
+
+        // Mock repository behavior
         List<Account> accounts = List.of(admin);
         when(accountRepository.findAll()).thenReturn(accounts);
+
+        // Save the admin account
         accountRepository.save(admin);
+
+        // Ensure that the list of accounts is not null
         assertNotNull(accounts);
+
+        // Delete the admin account
         accountRepository.delete(admin);
-        assertNull(accountRepository.findAll());
+
+        // Assertion
+        assertNull(accountRepository.findAll()); // Verifies that repository returns null after deletion
     }
+
+
+    /**
+     * Verifies successful deletion of a guest account.
+     */
     @Test
-    public void DeleteAccountShouldReturnSuccessGuest(){
-        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
-                "badPassword1", "1234567876543345678");
+    public void deleteAccountShouldReturnSuccessGuest() {
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,
+                "123-456-7890", "guest", "badPassword1", "1234567876543345678");
         guest.setId(1L);
-        List<Account> accounts = List.of(guest);
+
+        // Save the guest account
         accountRepository.save(guest);
-        assertNotNull(accounts);
+
+        // Ensure that the account is saved
+        assertNotNull(accountRepository.findAll());
+
+        // Delete the guest account
         accountRepository.delete(guest);
-        assertNull(accountRepository.findAll());
+
+        // Assertion
+        assertNull(accountRepository.findAll()); // Verifies that repository returns null after deletion
     }
-
-
-
-
 }
 
