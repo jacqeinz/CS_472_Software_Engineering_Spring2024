@@ -16,7 +16,6 @@ public class Room implements Serializable {
 	private String roomType;
 	private int price;
 	private int floorNumber;
-	private boolean occupied; // New field to indicate occupancy status
 
 	public Room() {
 	}
@@ -55,7 +54,10 @@ public class Room implements Serializable {
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) { this.id = id; }
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 
 	public String getName() {
@@ -74,11 +76,4 @@ public class Room implements Serializable {
 		this.price = price;
 	}
 
-	public boolean isOccupied() {
-		return occupied;
-	}
-
-	public void setOccupied(boolean occupied) {
-		this.occupied = occupied;
-	}
 }
