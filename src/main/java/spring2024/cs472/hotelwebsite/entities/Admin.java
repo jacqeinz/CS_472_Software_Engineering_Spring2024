@@ -4,9 +4,9 @@
 package spring2024.cs472.hotelwebsite.entities;
 
 // Imports necessary for the class
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import java.util.*;
 
 /**
  * Represents an admin account in the system.
@@ -20,6 +20,10 @@ public class Admin extends Account {
 
     // Attributes
     private int employeeId;
+
+    @OneToOne( cascade = CascadeType.ALL)
+    @JoinColumn
+    private Cart cart = new Cart(); // Add this line
 
     /**
      * Constructs an admin account.
@@ -53,6 +57,14 @@ public class Admin extends Account {
     public Admin(boolean isAdmin, int employeeId) {
         super();
         this.employeeId = employeeId;
+    }
+
+    // Add these getter and setter methods for the cart
+    public Cart getCart() {
+        return cart;
+    }
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
 

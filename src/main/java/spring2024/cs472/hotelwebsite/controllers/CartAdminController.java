@@ -1,22 +1,18 @@
-/**
- * CartAdminController.java
- */
 package spring2024.cs472.hotelwebsite.controllers;
 
-// Imports necessary for the class
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import spring2024.cs472.hotelwebsite.entities.Guest;
+import spring2024.cs472.hotelwebsite.entities.Admin;
 import spring2024.cs472.hotelwebsite.services.CartService;
 import spring2024.cs472.hotelwebsite.services.RoomService;
 
 /**
  * This class handles requests related to the admin's cart and checkout functionality.
- * It provides methods for displaying the admin's cart and checking out.
+ * It provides methods for displaying the admin's cart and initiating checkout.
  *
  * @author Team ABCFG
  */
@@ -31,35 +27,33 @@ public class CartAdminController {
 
     /**
      * Handles requests to display the admin's cart.
-     *
      * @param model The Model object to add attributes for the view.
      * @param session The HttpSession object to check the admin session.
      * @return The view name for displaying the admin's cart.
      */
     @GetMapping("/cartAdmin")
-    public String availableReservations(Model model, HttpSession session) {
-        if(session.getAttribute("admin") == null) {
-            return "redirect:/login";
+    public String showAdminCart(Model model, HttpSession session) {
+        if (session.getAttribute("admin") == null) {
+            return "redirect:/login"; // Redirect to login page if not logged in as admin
         }
-        Guest guest = (Guest) session.getAttribute("guest");
-        model.addAttribute("cart", guest.getCart());
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("cart", admin.getCart());
         return "cartAdmin";
     }
 
     /**
-     * Handles requests to checkout the admin's cart.
-     *
+     * Handles requests to initiate checkout of the admin's cart.
      * @param model The Model object to add attributes for the view.
      * @param session The HttpSession object to check the admin session.
-     * @param guest The Guest object associated with the cart.
-     * @return The redirect view name for displaying the confirmation of checkout.
+     * @return The view name for initiating the checkout process.
      */
-    @PostMapping("/cartAdmin/checkout")
-    public String checkoutCart(Model model, HttpSession session, Guest guest) {
-        if(session.getAttribute("admin") == null) {
-            return "redirect:/login";
+    @PostMapping("/cartAdmin/checkoutAdmin")
+    public String initiateAdminCheckout(Model model, HttpSession session) {
+        if (session.getAttribute("admin") == null) {
+            return "redirect:/login"; // Redirect to login page if not logged in as admin
         }
-        Long id = cartService.checkoutCart(guest.getCart(), guest).getId();
-        return "redirect:/checkedOutAdmin";
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
+        return "checkoutAdmin";
     }
 }
