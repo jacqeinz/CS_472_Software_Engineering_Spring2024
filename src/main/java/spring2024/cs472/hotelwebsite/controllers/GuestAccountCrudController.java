@@ -22,6 +22,9 @@ public class GuestAccountCrudController {
 
     @GetMapping("/guest/edit")
     public String showUpdateFormGuest(Model model, HttpSession session) {
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("guest", (Guest) session.getAttribute("guest"));
         return "updateGuest";
 
@@ -31,6 +34,9 @@ public class GuestAccountCrudController {
     @PostMapping("/guest/update")
     public String updateGuest(@ModelAttribute("guest") Guest guest,
                               BindingResult result, Model model, HttpSession session, SessionStatus status) {
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         if (result.hasErrors()) {
 
             return "redirect:/updateGuest";

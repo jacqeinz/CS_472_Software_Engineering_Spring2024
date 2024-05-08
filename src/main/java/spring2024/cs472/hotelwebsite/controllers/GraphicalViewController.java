@@ -1,5 +1,6 @@
 package spring2024.cs472.hotelwebsite.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,8 @@ public class GraphicalViewController {
     }
 
     @GetMapping("/floorplan")
-    public String getHotelFloorPlan(Model model, @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+    public String getHotelFloorPlan(Model model, @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, HttpSession session) {
+        if(session.getAttribute("admin") == null || session.getAttribute("guest") == null) {}
         if (start != null && end != null) {
             // Fetch all rooms
             List<Room> allRooms = roomService.getAllRooms();

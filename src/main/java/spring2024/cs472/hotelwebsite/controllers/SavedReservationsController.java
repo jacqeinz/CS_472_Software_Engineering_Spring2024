@@ -28,6 +28,9 @@ public class SavedReservationsController {
 //        if(session.getAttribute("admin") == null) {
 //            return "redirect:/login";
 //        }
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("SavedReservations", reservationDetailsRepository.findAll());
         return "SavedReservationReport";
     }

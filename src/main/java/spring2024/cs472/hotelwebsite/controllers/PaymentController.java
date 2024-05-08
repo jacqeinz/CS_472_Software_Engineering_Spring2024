@@ -29,12 +29,18 @@ public class PaymentController {
 
     @GetMapping("/checkout")
     public String payment(Model model, HttpSession session) {
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("guest", (Guest) session.getAttribute("guest"));
         return "checkout";
     }
 
     @PostMapping("/checkout")
     public String submitPayment(@ModelAttribute String creditCardNum, Model model, HttpSession session){
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         Guest guest = (Guest) session.getAttribute("guest");
         Long id = cartService.checkoutCart(guest.getCart(), guest).getId();
         accountRepository.save(guest);

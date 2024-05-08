@@ -1,5 +1,6 @@
 package spring2024.cs472.hotelwebsite.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +26,10 @@ public class RoomController {
 //    }
 
     @RequestMapping(value="/addRoom", method=RequestMethod.POST)
-    public String addRoom(@ModelAttribute("Room") Room room, BindingResult result, Model model) {
+    public String addRoom(@ModelAttribute("Room") Room room, BindingResult result, Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         if (result.hasErrors()) {
             return "addRoom";
         }
@@ -39,7 +43,10 @@ public class RoomController {
     }
 
     @GetMapping("/RoomIndex")
-    public String showRoomList(Model model){
+    public String showRoomList(Model model, HttpSession session){
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("Rooms", roomService.getAllRooms());
         return "roomIndex";
     }
@@ -53,14 +60,20 @@ public class RoomController {
 
     @GetMapping("/room/edit/{id}")
     public String
-    showUpdateForm(@PathVariable int id, Model model){
+    showUpdateForm(@PathVariable int id, Model model, HttpSession session){
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         Room room = roomService.getRoomById(id);
         model.addAttribute("Room", room);
         return "updateRoom";
     }
 
     @PostMapping("/room/update/{id}")
-    public String updateRoom(@PathVariable int id, Room room, BindingResult result, Model model){
+    public String updateRoom(@PathVariable int id, Room room, BindingResult result, Model model, HttpSession session){
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         if(result.hasErrors()) {
             return "updateRoom";
         }
@@ -70,7 +83,10 @@ public class RoomController {
 
     @GetMapping("/room/delete/{id}")
     public String
-    deleteRoom(@PathVariable int id, Model model){
+    deleteRoom(@PathVariable int id, Model model, HttpSession session){
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         Room room=roomService.getRoomById(id);
         roomService.deleteRoom(room);
         return "redirect:/RoomIndex";

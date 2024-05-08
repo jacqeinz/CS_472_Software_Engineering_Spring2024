@@ -23,13 +23,19 @@ public class SignUpAdminController {
 
 
     @GetMapping("SignUpAdmin")
-    public String signUpAdmin(Model model) {
+    public String signUpAdmin(Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("admin", new Admin());
         return "signUpAdmin";
     }
 
     @PostMapping("/SignUpAdmin")
     public String signUpAdmin(@ModelAttribute("Admin") Admin admin, Model model, BindingResult bindingResult, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         if (bindingResult.hasErrors()) {
             return "signUpAdmin";
         }
