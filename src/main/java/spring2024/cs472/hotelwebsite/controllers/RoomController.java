@@ -20,7 +20,10 @@ public class RoomController {
     }
 
     @RequestMapping(value="/addRoom", method=RequestMethod.POST)
-    public String addRoom(@ModelAttribute("Room") Room room, BindingResult result, Model model) {
+    public String addRoom(@ModelAttribute("Room") Room room, BindingResult result, Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         if (result.hasErrors()) {
             return "addRoom";
         }

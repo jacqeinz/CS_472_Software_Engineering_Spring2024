@@ -19,6 +19,9 @@ public class AdminDashboardController {
 
     @GetMapping("/logoutAdmin")
     public String logoutAdmin(Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         session.invalidate();
         return "logoutAdmin";
     }

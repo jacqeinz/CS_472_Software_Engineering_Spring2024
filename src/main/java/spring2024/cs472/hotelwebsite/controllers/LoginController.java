@@ -71,7 +71,7 @@ public class LoginController {
     }
 
     @PostMapping("/forgotPassword")
-    public String forgotPassword(@RequestParam String email, Model model, HttpSession session) {
+    public String forgotPasswordProcess(@RequestParam String email, Model model, HttpSession session) {
         Account account = accountRepository.findByEmail(email);
         String result = "";
         if (account != null) {
@@ -86,7 +86,7 @@ public class LoginController {
     @GetMapping("/resetPassword/{token}")
     public String resetPassword(@PathVariable String token, Model model, HttpSession session) {
         PasswordResetToken reset = tokenRepository.findByToken(token);
-        if (reset != null && accountService.hasExpired(reset.getExpiryDateTime())) {
+        if (reset != null && accountService.isNotExpired(reset.getExpiryDateTime())) {
             model.addAttribute("email", reset.getAccount().getEmail());
             return "resetPassword";
         }
@@ -94,7 +94,7 @@ public class LoginController {
     }
 
     @PostMapping("/resetPassword/{token}")
-    public String resetPassword(@PathVariable String token, @RequestParam String password, @RequestParam String email) {
+    public String resetPasswordProcess(@PathVariable String token, @RequestParam String password, @RequestParam String email) {
         Account account = accountRepository.findByEmail(email);
         if (account != null) {
             account.setUserPassword(password);

@@ -53,7 +53,7 @@ public class AccountService {
 
      public String sendEmail(Account account) {
         try {
-            String resetLink = generateRestToken(account);
+            String resetLink = generateResetToken(account);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(account.getEmail());
             message.setSubject("Password Reset");
@@ -67,7 +67,7 @@ public class AccountService {
         }
      }
 
-     private String generateRestToken(Account account) {
+     public String generateResetToken(Account account) {
      UUID uuid = UUID.randomUUID();
      LocalDateTime currentDateTime = LocalDateTime.now();
      LocalDateTime expiryDateTime = currentDateTime.plusMinutes(20);
@@ -76,15 +76,16 @@ public class AccountService {
      resetToken.setToken(uuid.toString());
      resetToken.setExpiryDateTime(expiryDateTime);
      resetToken.setAccount(account);
-     PasswordResetToken token = tokenRepository.save(resetToken);
+     tokenRepository.save(resetToken);
+     PasswordResetToken token = tokenRepository.findByToken(resetToken.getToken());
      if (token != null) {
      String endpointUrl = "http://localhost:8080/resetPassword";
      return endpointUrl + "/" + resetToken.getToken();
      }
-     return "";
+     return null;
      }
 
-     public boolean hasExpired(LocalDateTime expiryDateTime) {
+     public boolean isNotExpired(LocalDateTime expiryDateTime) {
      LocalDateTime currentDateTime = LocalDateTime.now();
      return expiryDateTime.isAfter(currentDateTime);
      }
