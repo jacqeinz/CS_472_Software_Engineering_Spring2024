@@ -27,7 +27,6 @@ public class Room implements Serializable {
 	private String roomType;
 	private int price;
 	private int floorNumber;
-	private boolean occupied; // New field to indicate occupancy status
 
 	/**
 	 * Default constructor.
@@ -111,7 +110,7 @@ public class Room implements Serializable {
 	public Long getId() {
 		return id;
 	}
-
+  
 	/**
 	 * Sets the ID of the room.
 	 *
@@ -156,7 +155,7 @@ public class Room implements Serializable {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+  
 	/**
 	 * Checks if the room is occupied.
 	 *

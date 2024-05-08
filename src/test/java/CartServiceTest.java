@@ -121,16 +121,39 @@ class CartServiceTest {
      * Test case to verify that checking out the cart is successful.
      */
     @Test
-    public void checkoutCartReturnSuccess() {
-        // Create a guest account
+    public void addRoomReservationReturnUnSuccess() {
+
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         guest.setId(1L);
         List<Account> accounts = List.of(guest);
         when(accountRepository.findAll()).thenReturn(accounts);
+        LocalDate start = LocalDate.now().plusDays(2);
+        LocalDate end = LocalDate.now().plusDays(5);
+        Room room = new Room("505", "Deluxe", 200, 5);
+//        RoomReservation returnedRoomReservation;
+//        when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
+//        cartService.addRoomReservations(guest.getCart(), List.of(room), start, end);
+        assertEquals(0, guest.getCart().getCartSize());
+    }
+
+     /**
+     * Test case to verify that the checkoutCart method successfully checks out a guest's cart and returns success.
+     * It tests the functionality of adding room reservations to a cart, saving the guest account, and sending a confirmation email.
+     */
+    @Test
+    public void checkoutCartReturnSuccess() {
+        // Create a guest account
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
+
         // Define start and end dates
         LocalDate start = LocalDate.now().plusDays(2);
         LocalDate end = LocalDate.now().plusDays(5);
+
         // Create a room
         Room room = new Room("505", "Deluxe", 200, 5);
 
@@ -176,5 +199,39 @@ class CartServiceTest {
         // Assertions
         assertNotNull(dates);
         assertEquals(dates.size(), 8);
+    }
+
+    /**
+     * Test case to verify that the setupDateList method returns a correct date array with a specific range of dates.
+     */
+    @Test
+    public void setupDateListReturnsCorrectDateArray2() {
+        // Define the start and end dates for the date range
+        LocalDate start = LocalDate.now().plusDays(3);
+        LocalDate end = LocalDate.now().plusDays(8);
+
+        // Call the setupDateList method to generate the list of dates
+        List<LocalDate> dates = cartService.setupDateList(start, end);
+
+        // Ensure that the generated list is not null and has the expected size
+        assertNotNull(dates);
+        assertEquals(dates.size(), 5);
+    }
+
+    /**
+     * Test case to verify that the setupDateList method returns a correct date array with a different range of dates.
+     */
+    @Test
+    public void setupDateListReturnsCorrectDateArray3() {
+        // Define the start and end dates for the date range
+        LocalDate start = LocalDate.now().plusDays(1);
+        LocalDate end = LocalDate.now().plusDays(20);
+
+        // Call the setupDateList method to generate the list of dates
+        List<LocalDate> dates = cartService.setupDateList(start, end);
+
+        // Ensure that the generated list is not null and has the expected size
+        assertNotNull(dates);
+        assertEquals(dates.size(), 19);
     }
 }

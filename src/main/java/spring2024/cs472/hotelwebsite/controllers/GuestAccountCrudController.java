@@ -46,9 +46,11 @@ public class GuestAccountCrudController {
      */
     @GetMapping("/guest/edit")
     public String showUpdateFormGuest(Model model, HttpSession session) {
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("guest", (Guest) session.getAttribute("guest")); // Add guest information to the model
         return "updateGuest"; // Display the form for updating guest information
-
     }
 
     /**
@@ -64,6 +66,9 @@ public class GuestAccountCrudController {
     @PostMapping("/guest/update")
     public String updateGuest(@ModelAttribute("guest") Guest guest,
                               BindingResult result, Model model, HttpSession session, SessionStatus status) {
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         if (result.hasErrors()) {
             return "redirect:/updateGuest"; // Redirect to the update guest form if there are validation errors
         }

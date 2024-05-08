@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.*;
 import org.junit.runner.RunWith;
@@ -26,8 +27,11 @@ import spring2024.cs472.hotelwebsite.entities.*;
 import spring2024.cs472.hotelwebsite.repositories.AccountRepository;
 import spring2024.cs472.hotelwebsite.repositories.ReservationDetailsRepository;
 import spring2024.cs472.hotelwebsite.repositories.RoomReservationRepository;
+import spring2024.cs472.hotelwebsite.repositories.TokenRepository;
 import spring2024.cs472.hotelwebsite.services.AccountService;
 import spring2024.cs472.hotelwebsite.services.CartService;
+import spring2024.cs472.hotelwebsite.services.ResetPasswordService;
+import spring2024.cs472.hotelwebsite.entities.PasswordResetToken;
 
 /**
  * Test class for the AccountService.
@@ -48,6 +52,8 @@ class AccountServiceTest {
     private AccountService accountService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private ResetPasswordService resetPasswordService;
     @MockBean
     private AccountRepository accountRepository;
     @MockBean
@@ -56,6 +62,11 @@ class AccountServiceTest {
     private ReservationDetailsRepository reservationDetailsRepository;
     @MockBean
     JavaMailSender javaMailSender;
+
+
+    @Autowired
+    private TokenRepository tokenRepository;
+
 
 //    @Before
 //    public void setUp() {
@@ -166,7 +177,6 @@ class AccountServiceTest {
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
-        // No need to mock javaMailSender.send() since it returns void
 
         // Capture the email message sent by the method
         ArgumentCaptor<SimpleMailMessage> capturedMail = ArgumentCaptor.forClass(SimpleMailMessage.class);
@@ -185,6 +195,98 @@ class AccountServiceTest {
         assertTrue(result);
         assertTrue(Objects.requireNonNull(capturedMailMessage.getText()).contains(Double.toString(details.getTotal())));
         assertEquals(Objects.requireNonNull(capturedMailMessage.getTo())[0], guest.getEmail());
+    }
+  
+    /**
+     * Test case to verify that a reset password email is sent successfully.
+     */
+    @Test
+    public void resetPasswordEmailIsSent() {
+        // Create a new account
+        Account account = new Account("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890",
+                "user", "12");
+        // Ensure that the email sending process returns "Success"
+        assertEquals("Success", accountService.sendEmail(account));
+    }
+
+    /**
+     * Test case to verify that a reset token is generated successfully for an account.
+     */
+    @Test
+    public void resetTokenCreatedSuccessfully() {
+        // Create a new account
+        Account account = new Account("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        // Generate a reset token for the account and ensure it is not null
+        String result = accountService.generateResetToken(account);
+        assertNotNull(result);
+    }
+
+    /**
+     * Test case to verify that an account's password is changed after a reset process.
+     */
+    @Test
+    public void accountPasswordChangedAfterReset() {
+        // Create a new account
+        Account account = new Account("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890",
+                "user", "12");
+        // Save the account in the repository
+        accountRepository.save(account);
+        // Generate a reset token for the account
+        String result = accountService.generateResetToken(account);
+        // Mock the repository behavior
+        when(accountRepository.findByEmail("guest@guest.guest")).thenReturn(account);
+        // Perform the reset password process
+        resetPasswordService.resetPasswordProcess(result, "1234", "guest@guest.guest");
+        // Ensure that the account's password is changed to the new one
+        assertEquals("1234", account.getUserPassword());
+    }
+
+    /**
+     * Test case to verify that a reset token is expired.
+     */
+    @Test
+    void TokenIsExpired() {
+        // Create a new account
+        Account account = new Account("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890",
+                "user", "12");
+        // Create a password reset token with an expiry date in the past
+        PasswordResetToken token = new PasswordResetToken();
+        LocalDateTime expiryDateTime = LocalDateTime.now().minusMinutes(2);
+        token.setExpiryDateTime(expiryDateTime);
+        // Ensure that the token is considered expired
+        assertFalse(accountService.isNotExpired(token.getExpiryDateTime()));
+    }
+
+    /**
+     * Test case to verify that a reset token is not expired.
+     */
+    @Test
+    void TokenIsNotExpired() {
+        // Create a new account
+        Account account = new Account("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890",
+                "user", "12");
+        // Create a password reset token with an expiry date in the future
+        PasswordResetToken token = new PasswordResetToken();
+        LocalDateTime expiryDateTime = LocalDateTime.now().plusMinutes(2);
+        token.setExpiryDateTime(expiryDateTime);
+        // Ensure that the token is considered not expired
+        assertTrue(accountService.isNotExpired(token.getExpiryDateTime()));
+    }
+
+    /**
+     * Test case to verify that all admin accounts are retrieved successfully.
+     */
+    @Test
+    void getAllAdminsRetrievesAllAdmins() {
+        // Create a new admin account
+        Admin admin = new Admin(true, 123456);
+        // Create a list of accounts containing the admin
+        List<Account> accounts = List.of(admin);
+        // Mock the repository behavior to return the list of accounts
+        when(accountRepository.findAll()).thenReturn(accounts);
+        // Ensure that the list of admins is not null
+        assertNotNull(accountService.getAllAdmins());
     }
 }
 

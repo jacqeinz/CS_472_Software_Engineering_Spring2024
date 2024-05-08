@@ -97,7 +97,7 @@ public class AccountService {
      */
     public String sendEmail(Account account) {
         try {
-            String resetLink = generateRestToken(account);
+            String resetLink = generateResetToken(account);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(account.getEmail());
             message.setSubject("Password Reset");
@@ -140,7 +140,7 @@ public class AccountService {
      * @param expiryDateTime The expiry date and time of the token.
      * @return true if the token has not expired, false otherwise.
      */
-    public boolean hasExpired(LocalDateTime expiryDateTime) {
+    public boolean isNotExpired(LocalDateTime expiryDateTime) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         return expiryDateTime.isAfter(currentDateTime);
     }

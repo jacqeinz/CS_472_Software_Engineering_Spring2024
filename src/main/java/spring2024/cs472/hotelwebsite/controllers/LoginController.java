@@ -136,6 +136,7 @@ public class LoginController {
      */
     @GetMapping("/resetPassword/{token}")
     public String resetPassword(@PathVariable String token, Model model, HttpSession session) {
+
         PasswordResetToken reset = tokenRepository.findByToken(token); // Find token by token value
         if (reset != null && accountService.hasExpired(reset.getExpiryDateTime())) {
             model.addAttribute("email", reset.getAccount().getEmail()); // Add email attribute to model

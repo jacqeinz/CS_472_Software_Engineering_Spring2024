@@ -4,6 +4,7 @@
 package spring2024.cs472.hotelwebsite.controllers;
 
 // Imports necessary for the class
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,10 @@ public class AdminAccountCrudController {
      * @return The view name for displaying Admin accounts.
      */
     @GetMapping("/AccountIndex")
-    public String showUserList(Model model) {
+    public String showUserList(Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("Admins", accountService.getAllAdmins());
         return "accountIndex";
     }
@@ -56,7 +60,10 @@ public class AdminAccountCrudController {
      * @return The view name for updating an Admin account.
      */
     @GetMapping("/admin/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") long id, Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         Admin admin = (Admin) accountRepository.findById(id);
 //                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
@@ -74,7 +81,10 @@ public class AdminAccountCrudController {
      */
     @PostMapping("/admin/edit/{id}")
     public String updateAdmin(@PathVariable("id") long id, Admin admin,
-                              BindingResult result) {
+                              BindingResult result, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         if (result.hasErrors()) {
             return "updateAdmin";
         }
@@ -91,7 +101,10 @@ public class AdminAccountCrudController {
      * @return The redirect view name after deleting the Admin account.
      */
     @GetMapping("/admin/delete/{id}")
-    public String deleteAdmin(@PathVariable("id") long id, Model model) {
+    public String deleteAdmin(@PathVariable("id") long id, Model model, HttpSession session) {
+        if(session.getAttribute("admin") == null){
+            return "redirect:/login";
+        }
         Admin admin = (Admin) accountRepository.findById(id);
 //                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         accountRepository.delete(admin);

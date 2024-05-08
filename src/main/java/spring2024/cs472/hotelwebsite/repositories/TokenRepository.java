@@ -6,6 +6,8 @@ package spring2024.cs472.hotelwebsite.repositories;
 // Imports necessary for the class
 import org.springframework.data.jpa.repository.JpaRepository;
 import spring2024.cs472.hotelwebsite.entities.PasswordResetToken;
+import org.springframework.stereotype.Repository;
+import spring2024.cs472.hotelwebsite.entities.*;
 
 /**
  * Repository interface for managing password reset tokens.
@@ -14,6 +16,7 @@ import spring2024.cs472.hotelwebsite.entities.PasswordResetToken;
  *
  * @author Team ABCFG
  */
+@Repository
 public interface TokenRepository extends JpaRepository<PasswordResetToken, Integer>{
 
     /**

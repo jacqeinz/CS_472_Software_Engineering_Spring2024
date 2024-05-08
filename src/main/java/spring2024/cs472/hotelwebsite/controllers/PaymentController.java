@@ -46,6 +46,9 @@ public class PaymentController {
      */
     @GetMapping("/checkout")
     public String payment(Model model, HttpSession session) {
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         model.addAttribute("guest", (Guest) session.getAttribute("guest")); // Add guest attribute to model
         return "checkout"; // Display the payment/checkout page
     }
@@ -60,6 +63,9 @@ public class PaymentController {
      */
     @PostMapping("/checkout")
     public String submitPayment(@ModelAttribute String creditCardNum, Model model, HttpSession session){
+        if(session.getAttribute("guest") == null){
+            return "redirect:/login";
+        }
         Guest guest = (Guest) session.getAttribute("guest"); // Retrieve guest from session
         Long id = cartService.checkoutCart(guest.getCart(), guest).getId(); // Checkout the cart and retrieve the ID
         accountRepository.save(guest); // Save guest information
