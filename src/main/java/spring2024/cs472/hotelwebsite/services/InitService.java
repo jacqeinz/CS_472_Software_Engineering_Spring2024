@@ -1,32 +1,43 @@
+/**
+ * InitService.java
+ */
 package spring2024.cs472.hotelwebsite.services;
 
+// Imports necessary for the class
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring2024.cs472.hotelwebsite.entities.*;
 import spring2024.cs472.hotelwebsite.repositories.ReservationDetailsRepository;
 import spring2024.cs472.hotelwebsite.repositories.RoomReservationRepository;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Service class for initializing the system with sample data.
+ * This class is responsible for initializing the system with sample data for testing and demonstration purposes.
+ *
+ * @author Team ABCFG
+ */
 @Service
 public class InitService {
 
+    // Attributes
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private RoomService roomService;
-
     @Autowired
     private RoomReservationRepository roomReservationRepository;
-
-    private boolean isInitialized = false;
     @Autowired
     private ReservationDetailsRepository reservationDetailsRepository;
+    private boolean isInitialized = false;
 
+    /**
+     * Initializes the system with sample data.
+     * This method creates sample admin and guest accounts, as well as sample rooms and reservations.
+     */
     public void init() {
         if(!isInitialized) {
             Admin admin = new Admin(true,123456);
