@@ -25,10 +25,7 @@ public class SavedReservationsController {
 
     @GetMapping("/SavedReservationReport")
     public String showReservationList(Model model, HttpSession session){
-//        if(session.getAttribute("admin") == null) {
-//            return "redirect:/login";
-//        }
-        if(session.getAttribute("admin") == null){
+        if(session.getAttribute("admin") == null) {
             return "redirect:/login";
         }
         model.addAttribute("SavedReservations", reservationDetailsRepository.findAll());
