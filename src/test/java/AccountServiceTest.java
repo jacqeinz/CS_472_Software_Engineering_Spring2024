@@ -203,6 +203,102 @@ class AccountServiceTest {
         when(accountRepository.findAll()).thenReturn(accounts);
         assertNotNull(accountService.getAllAdmins());
     }
+    @Test
+    public void SaveAccountShouldReturnSuccessAdmin(){
+        Admin admin = new Admin(true, 123456);
+        admin.setUserName("Admin");
+        admin.setUserPassword("admin");
+        admin.setId(1L);
+        List<Account> accounts = List.of(admin);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        Account account = accountRepository.save(admin);
+        assertNotNull(account);
+    }
+    @Test
+    public void SaveAccountShouldReturnUnSuccessAdmin(){
+        Admin admin = new Admin(true, 123456);
+        admin.setUserName("Admin");
+        admin.setUserPassword("admin");
+        admin.setId(1L);
+        List<Account> accounts = List.of(admin);
+        when(accountRepository.findAll()).thenReturn(accounts);
+//        Account account = accountRepository.save(admin);
+
+        assertNull(accountRepository);
+    }
+    @Test
+    public void SaveAccountShouldReturnSuccessGuest(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        Account account = accountRepository.save(guest);
+        assertNotNull(account);
+    }
+    @Test
+    public void SaveAccountShouldReturnUnSuccessGuest(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
+
+        assertNull(accounts);
+    }
+    @Test
+    public void UpdateAccountShouldReturnSuccessAdmin(){
+        Admin admin = new Admin(true, 123456);
+        admin.setUserName("Admin");
+        admin.setUserPassword("admin");
+        admin.setId(1L);
+        List<Account> accounts = List.of(admin);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        Account account = accountRepository.save(admin);
+        assertNotNull(account);
+        admin.setId(2L);
+        Account updatedAccount = accountRepository.save(admin);
+        assertNotNull(updatedAccount);
+    }
+
+    @Test
+    public void UpdateAccountShouldReturnUnSuccessGuest(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        assertNotNull(accounts);
+        guest.setId(2L);
+        Account updatedAccount = accountRepository.save(guest);
+        assertNotNull(updatedAccount);
+    }
+
+    @Test
+    public void DeleteAccountShouldReturnSuccessAdmin(){
+        Admin admin = new Admin(true, 123456);
+        admin.setUserName("Admin");
+        admin.setUserPassword("admin");
+        admin.setId(1L);
+        List<Account> accounts = List.of(admin);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        accountRepository.save(admin);
+        assertNotNull(accounts);
+        accountRepository.delete(admin);
+        assertNull(accountRepository.findAll());
+    }
+    @Test
+    public void DeleteAccountShouldReturnSuccessGuest(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        accountRepository.save(guest);
+        assertNotNull(accounts);
+        accountRepository.delete(guest);
+        assertNull(accountRepository.findAll());
+    }
+
 
 
 
