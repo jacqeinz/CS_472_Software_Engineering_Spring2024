@@ -73,6 +73,29 @@ public class GraphicalViewController {
         // Return the Thymeleaf template for the hotel floor plan
         return "floorplan";
     }
+
+    @GetMapping("/floorplanGuest")
+    public String getHotelFloorPlanGuest(Model model, @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, HttpSession session) {
+        if(session.getAttribute("admin") == null || session.getAttribute("guest") == null) {}
+        if (start != null && end != null) {
+            // Fetch all rooms
+            List<Room> allRooms = roomService.getAllRooms();
+            System.out.println("Number of rooms fetched: " + allRooms.size());
+
+            // Fetch available rooms for the specified date range
+            List<Room> availableRooms = roomService.getRoomsByAvailability(start, end);
+            System.out.println("Number of available rooms: " + availableRooms.size());
+
+            // Generate HTML for the hotel floor plan
+            String floorPlanHTML = graphicalViewService.generateHotelFloorPlanHTML(allRooms, availableRooms);
+
+            // Add the generated HTML to the model
+            model.addAttribute("floorPlanHTML", floorPlanHTML);
+        }
+
+        // Return the Thymeleaf template for the hotel floor plan
+        return "floorplanGuest";
+    }
 }
 
 
