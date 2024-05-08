@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Service class for managing graphical views.
- * This class provides a method to generate HTML for displaying the hotel floor plan.
+ * This class provides a method to generate HTML for displaying the hotel floor plan in the graphical view.
  *
  * @author Team ABCFG
  */
