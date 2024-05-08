@@ -105,6 +105,27 @@ class CartServiceTest {
     }
 
     @Test
+    public void addRoomReservationReturnUnSuccess() {
+
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        LocalDate start = LocalDate.now().plusDays(2);
+        LocalDate end = LocalDate.now().plusDays(5);
+        Room room = new Room("505", "Deluxe", 200, 5);
+//        RoomReservation returnedRoomReservation;
+//        when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
+//        cartService.addRoomReservations(guest.getCart(), List.of(room), start, end);
+        assertEquals(0, guest.getCart().getCartSize());
+
+
+
+
+    }
+
+    @Test
     public void checkoutCartReturnSuccess() {
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
@@ -135,8 +156,8 @@ class CartServiceTest {
         assertThat(reservationDetails, is(in(guest.getCurrentReservations())));
         assertEquals(capDetails, reservationDetails);
         assertEquals(capAccount, guest);
-
     }
+
 
     @Test
     public void setupDateListReturnsCorrectDateArray() {
@@ -146,6 +167,26 @@ class CartServiceTest {
         List<LocalDate> dates = cartService.setupDateList(start, end);
         assertNotNull(dates);
         assertEquals(dates.size(), 8);
+
+    }
+    @Test
+    public void setupDateListReturnsCorrectDateArray2() {
+        LocalDate start = LocalDate.now().plusDays(3);
+        LocalDate end = LocalDate.now().plusDays(8);
+
+        List<LocalDate> dates = cartService.setupDateList(start, end);
+        assertNotNull(dates);
+        assertEquals(dates.size(), 5);
+
+    }
+    @Test
+    public void setupDateListReturnsCorrectDateArray3() {
+        LocalDate start = LocalDate.now().plusDays(1);
+        LocalDate end = LocalDate.now().plusDays(20);
+
+        List<LocalDate> dates = cartService.setupDateList(start, end);
+        assertNotNull(dates);
+        assertEquals(dates.size(), 19);
 
     }
 

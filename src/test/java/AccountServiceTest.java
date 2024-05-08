@@ -134,7 +134,6 @@ class AccountServiceTest {
         when(accountRepository.findAll()).thenReturn(accounts);
         when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
-        // No need to mock javaMailSender.send() since it returns void
 
         ArgumentCaptor<SimpleMailMessage> capturedMail = ArgumentCaptor.forClass(SimpleMailMessage.class);
 

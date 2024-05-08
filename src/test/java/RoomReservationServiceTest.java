@@ -124,6 +124,52 @@ class RoomReservationServiceTest {
 
     }
     @Test
+    public void getDetailsByRoomReservationIdReturnsDetailsUnsuccessful() {
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        allDetails.add(details1);
+        allDetails.add(details2);
+        allDetails.add(details3);
+
+        assertNotEquals(roomReservationService.getDetailsByRoomReservationId(20), details2);
+
+    }
+    @Test
     public void getAllRoomReservationDetailsSuccess() {
         Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
@@ -166,9 +212,291 @@ class RoomReservationServiceTest {
         allDetails.add(details2);
         allDetails.add(details3);
 
-        assertNotNull(roomReservationService.getAllRoomReservations());
-
+        assertNotNull(roomReservationRepository.findAll());
 
     }
+    @Test
+    public void getAllRoomReservationDetailsUnSuccess() {
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+//        allDetails.add(details1);
+//        allDetails.add(details2);
+//        allDetails.add(details3);
+
+        assertNull(roomReservationRepository.findAll());
+    }
+
+    @Test
+    public void getRoomReservationByIdSuccessful(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        allDetails.add(details1);
+        allDetails.add(details2);
+        allDetails.add(details3);
+
+        assertNotNull(roomReservationRepository.findById(6));
+
+    }
+    @Test
+    public void getRoomReservationByIdUnSuccessful(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        allDetails.add(details1);
+        allDetails.add(details2);
+        allDetails.add(details3);
+
+        assertNull(roomReservationRepository.findById(35));
+
+    }
+    @Test
+    public void SaveReservationDetailsUnSuccessful(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+//        allDetails.add(details1);
+//        allDetails.add(details2);
+//        allDetails.add(details3);
+
+        assertNull(reservationDetailsRepository.findAll());
+    }
+
+    @Test
+    public void SaveReservationDetailsSuccessful(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        allDetails.add(details1);
+        allDetails.add(details2);
+        allDetails.add(details3);
+        reservationDetailsRepository.delete(details1);
+//        reservationDetailsRepository.delete(details2);
+//        reservationDetailsRepository.delete(details3);
+
+        assertNotNull(reservationDetailsRepository.findAll());
+    }
+    @Test
+    public void SaveReservationDetailsUnSuccessfulDelete(){
+        Guest guest = new Guest("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest" ,"123-456-7890", "guest",
+                "badPassword1", "1234567876543345678");
+        guest.setId(1L);
+        List<Account> accounts = List.of(guest);
+        Room room1 = new Room("505", "Deluxe", 200, 5);
+        Room room2 = new Room("415", "Deluxe", 200, 4);
+        Room room3 = new Room("325", "Standard", 100, 3);
+        LocalDate start1 = LocalDate.now().plusDays(2);
+        LocalDate end1 = LocalDate.now().plusDays(5);
+        LocalDate start2 = LocalDate.now().plusDays(6);
+        LocalDate end2 = LocalDate.now().plusDays(10);
+        LocalDate start3 = LocalDate.now().plusDays(11);
+        LocalDate end3 = LocalDate.now().plusDays(15);
+        List<ReservationDetails> allDetails = new ArrayList<>();
+        AtomicLong idValue = new AtomicLong(5L);
+
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(roomReservationRepository.save(any(RoomReservation.class))).thenAnswer(invocation -> {
+            RoomReservation reservation = invocation.getArgument(0, RoomReservation.class);
+            reservation.setId(idValue.getAndIncrement());
+            return reservation;
+        });
+        when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(reservationDetailsRepository.findAll()).thenReturn(allDetails);
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room1), start1, end1);
+        ReservationDetails details1 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room2), start2, end2);
+        ReservationDetails details2 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        cartService.addRoomReservations(guest.getCart(), List.of(room3), start3, end3);
+        ReservationDetails details3 = new ReservationDetails(guest, guest.getCart().getRoomReservations(), guest.getPaymentInfo(), guest.getCart().getTotal());
+        guest.getCart().emptyCart();
+
+        allDetails.add(details1);
+        allDetails.add(details2);
+        allDetails.add(details3);
+        reservationDetailsRepository.delete(details1);
+        reservationDetailsRepository.delete(details2);
+        reservationDetailsRepository.delete(details3);
+
+        assertNull(reservationDetailsRepository.findAll());
+    }
+
+
+
 
 }
