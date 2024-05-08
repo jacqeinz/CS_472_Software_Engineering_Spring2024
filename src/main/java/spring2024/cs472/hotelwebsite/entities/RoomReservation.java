@@ -69,6 +69,9 @@ public class RoomReservation implements Serializable {
 		this.dates = dates;
 		setTotal(dates.size() * room.getPrice());
 	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 
 }

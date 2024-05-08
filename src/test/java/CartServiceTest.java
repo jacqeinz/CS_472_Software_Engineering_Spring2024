@@ -2,9 +2,9 @@
 import static org.apache.coyote.http11.Constants.a;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.validation.BindingResultUtils.getBindingResult;
@@ -19,6 +19,7 @@ import java.util.stream.IntStream;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -80,6 +82,10 @@ class CartServiceTest {
 
     @MockBean
     private ReservationDetailsRepository reservationDetailsRepository;
+
+    @MockBean
+    JavaMailSender javaMailSender;
+
     @Test
     public void addRoomReservationReturnSuccess() {
 
@@ -108,13 +114,38 @@ class CartServiceTest {
         LocalDate start = LocalDate.now().plusDays(2);
         LocalDate end = LocalDate.now().plusDays(5);
         Room room = new Room("505", "Deluxe", 200, 5);
-        RoomReservation returnedRoomReservation;
+
         when(roomReservationRepository.save(any(RoomReservation.class))).then(AdditionalAnswers.returnsFirstArg());
         when(reservationDetailsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+        when(accountService.sendConfirmationEmail(any(Account.class), any(ReservationDetails.class))).thenReturn(true);
+
+        ArgumentCaptor<Account> capturedAccount = ArgumentCaptor.forClass(Account.class);
+        ArgumentCaptor<ReservationDetails> capturedReservationDetails = ArgumentCaptor.forClass(ReservationDetails.class);
+
         cartService.addRoomReservations(guest.getCart(), List.of(room), start, end);
+
         accountRepository.save(accounts.get(0));
         ReservationDetails reservationDetails = cartService.checkoutCart(guest.getCart(), guest);
+
+        verify(accountService).sendConfirmationEmail(capturedAccount.capture(), capturedReservationDetails.capture());
+        Account capAccount = capturedAccount.getValue();
+        ReservationDetails capDetails = capturedReservationDetails.getValue();
+
+
         assertThat(reservationDetails, is(in(guest.getCurrentReservations())));
+        assertEquals(capDetails, reservationDetails);
+        assertEquals(capAccount, guest);
+
+    }
+
+    @Test
+    public void setupDateListReturnsCorrectDateArray() {
+        LocalDate start = LocalDate.now().plusDays(2);
+        LocalDate end = LocalDate.now().plusDays(10);
+
+        List<LocalDate> dates = cartService.setupDateList(start, end);
+        assertNotNull(dates);
+        assertEquals(dates.size(), 8);
 
     }
 

@@ -7,32 +7,151 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+<style>
+    @media print {
+        .noPrint{
+            display: none;
+        }
+    }
+</style>
 <body>
-<section class="container">
-    <h2>Selected Reservations</h2>
-    <div class="row">
-        <h3 th:if="${details.roomReservations.size()} eq 0">No items in cart.</h3>
-        <article th:each="item : ${details.roomReservations}" class="col-4 card">
-            <h4 th:text="${item.room.roomNumber}">Room Number</h4>
-            <h5 th:text="${item.total}">$$$</h5>
-            <h5>Dates:</h5>
-            <ul class="list-group list-group-flush">
-                <li th:each="date : ${item.dates}" th:text="${#temporals.format(date, 'MM/dd/yyyy')}"
-                    class="list-group-item">02/31/2025</li>
-            </ul>
+<!--<section class="container">-->
+<!--    <h2>Selected Reservations</h2>-->
+<!--    <div class="row">-->
+<!--        <h3 th:if="${details.roomReservations.size()} eq 0">No items in cart.</h3>-->
+<!--        <article th:each="item : ${details.roomReservations}" class="col-4 card">-->
+<!--            <h4 th:text="${item.room.roomNumber}">Room Number</h4>-->
+<!--            <h5 th:text="${item.total}">$$$</h5>-->
+<!--            <h5>Dates:</h5>-->
+<!--            <ul class="list-group list-group-flush">-->
+<!--                <li th:each="date : ${item.dates}" th:text="${#temporals.format(date, 'MM/dd/yyyy')}"-->
+<!--                    class="list-group-item">02/31/2025</li>-->
+<!--            </ul>-->
 
-        </article>
+<!--        </article>-->
 
+<!--    </div>-->
+<!--    <a class="btn btn-primary" href="/availableReservations">View Available Reservations</a>-->
+<!--    <a class="btn btn-primary" href="/guestDashboard">View Dashboard</a>-->
+
+
+
+
+<!--</section>-->
+
+<div class="container">
+    <div class="row gutters">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="invoice-container">
+                        <div class="invoice-header">
+                            <!-- Row start -->
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="custom-actions-btns mb-5">
+                                            <button onclick="window.print();" class="btn btn-primary">Print</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Row end -->
+                            <div class="noPrint">
+                            <!-- Row start -->
+                            <article th:each="item : ${details}">
+                            <div class="row gutters">
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                                    <div class="invoice-details">
+                                        <address>
+                                            TestGuest<br>
+                                            150-600 Church Street, Florida, USA
+                                        </address>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                                    <div class="invoice-details">
+                                        <div class="invoice-num">
+                                            <div th:text="'Reservation ID: '+${item.id}"></div>
+                                            <div th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy')}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </article>
+                            <!-- Row end -->
+                        </div>
+                        <div class="invoice-body">
+                            <!-- Row start -->
+                            <div class="row gutters">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table m-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Rooms</th>
+                                                <th>Room Numbers</th>
+                                                <th>Dates</th>
+                                                <th>Sub Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <th:block th:each="item : ${details.roomReservations}">
+                                            <tr>
+                                                <td>
+                                                    Wordpress Template
+                                                    <p class="m-0 text-muted" th:text="${item.room.roomType}"></p>                                                                         </p>
+                                                </td>
+                                                <td th:text="${item.room.roomNumber}"></td>
+                                                <td th:text="${item.dates.size}"></td>
+                                                <td th:text="'$'+${item.total}"></td>
+                                            </tr>
+                                            </th:block>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td colspan="2">
+                                                    <p>
+                                                    </p>
+                                                    <h5 class="text-success"><strong>Grand Total</strong></h5>
+                                                </td>
+                                                <td>
+                                                    <p></p>
+                                                    <h5 class="text-success"><strong th:text="'$'+${details.total}"></strong></h5>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Row end -->
+                        </div>
+                        <div class="invoice-footer">
+                            Thank you for your Business.
+                        </div>
+                            </div>
+                        <a class="btn btn-primary" href="/availableReservations">View Available Reservations</a>
+                        <a class="btn btn-primary" href="/guestDashboard">View Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <a class="btn btn-primary" href="/availableReservations">View Available Reservations</a>
-    <a class="btn btn-primary" href="/guestDashboard">View Dashboard</a>
+</div>
 
-
-
-
-</section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+    let now=new Date();
+    let datetime=now.toLocaleString();
+    document.getElementById("datetime").innerHTML=datetime;
+
+    function printDiv(divName){
+        let printContents=document.getElementById(divName).innerHTML;
+        let originalContents=document.body.innerHTML;
+        document.body.innerHTML=printContents;
+        window.print();
+        document.body.innerHTML=originalContents;
+    }
+</script>
+
 </body>
 </html>
