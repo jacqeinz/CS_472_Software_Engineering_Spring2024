@@ -97,7 +97,7 @@ public class AccountService {
      */
     public String sendEmail(Account account) {
         try {
-            String resetLink = generateResetToken(account);
+            String resetLink = generateRestToken(account);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(account.getEmail());
             message.setSubject("Password Reset");
@@ -117,7 +117,7 @@ public class AccountService {
      * @param account The account for which to generate the token.
      * @return The reset token.
      */
-    private String generateRestToken(Account account) {
+    public String generateRestToken(Account account) {
         UUID uuid = UUID.randomUUID();
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime expiryDateTime = currentDateTime.plusMinutes(20);

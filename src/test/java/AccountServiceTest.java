@@ -223,7 +223,7 @@ class AccountServiceTest {
         Account account = new Account("Guest Guesterson", "123 Guest St", "1/2/3456", "guest@guest.guest", "123-456-7890", "guest",
                 "badPassword1", "1234567876543345678");
         // Generate a reset token for the account and ensure it is not null
-        String result = accountService.generateResetToken(account);
+        String result = accountService.generateRestToken(account);
         assertNotNull(result);
     }
 
@@ -238,7 +238,7 @@ class AccountServiceTest {
         // Save the account in the repository
         accountRepository.save(account);
         // Generate a reset token for the account
-        String result = accountService.generateResetToken(account);
+        String result = accountService.generateRestToken(account);
         // Mock the repository behavior
         when(accountRepository.findByEmail("guest@guest.guest")).thenReturn(account);
         // Perform the reset password process

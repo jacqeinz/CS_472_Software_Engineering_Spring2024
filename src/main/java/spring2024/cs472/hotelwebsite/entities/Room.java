@@ -28,9 +28,6 @@ public class Room implements Serializable {
 	private int price;
 	private int floorNumber;
 
-	/**
-	 * Default constructor.
-	 */
 	public Room() {}
 
 	/**
@@ -156,21 +153,21 @@ public class Room implements Serializable {
 		this.price = price;
 	}
   
-	/**
-	 * Checks if the room is occupied.
-	 *
-	 * @return true if the room is occupied, false otherwise.
-	 */
-	public boolean isOccupied() {
-		return occupied;
-	}
-
-	/**
-	 * Sets the occupancy status of the room.
-	 *
-	 * @param occupied The occupancy status to set.
-	 */
-	public void setOccupied(boolean occupied) {
-		this.occupied = occupied;
-	}
+//	/**
+//	 * Checks if the room is occupied.
+//	 *
+//	 * @return true if the room is occupied, false otherwise.
+//	 */
+//	public boolean isOccupied() {
+//		return occupied;
+//	}
+//
+//	/**
+//	 * Sets the occupancy status of the room.
+//	 *
+//	 * @param occupied The occupancy status to set.
+//	 */
+//	public void setOccupied(boolean occupied) {
+//		this.occupied = occupied;
+//	}
 }

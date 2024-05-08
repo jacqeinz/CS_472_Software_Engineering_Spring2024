@@ -69,7 +69,7 @@ import spring2024.cs472.hotelwebsite.services.RoomService;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = HotelWebsiteApplication.class)
-class RoomReservationServiceTest
+class RoomReservationServiceTest{
 
     // Attributes
     @Autowired
