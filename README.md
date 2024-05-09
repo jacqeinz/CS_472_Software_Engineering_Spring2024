@@ -76,3 +76,4 @@ Version History
 License
 * This project is intended for academic purposes only. Any commercial use or distribution without the explicit consent of the authors is strictly prohibited.
 
+Video walkthrough for website: https://www.youtube.com/watch?v=MyD0jFfIbgc
