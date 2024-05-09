@@ -354,7 +354,6 @@ class RoomReservationServiceTest{
 //        assertNotNull(roomReservationService.getRoomReservationById(6));
 //    }
 
-
     /**
     * Verifies unsuccessful retrieval of a room reservation by its ID.
     */
