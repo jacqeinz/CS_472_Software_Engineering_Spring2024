@@ -72,6 +72,6 @@ public class SignUpAdminController {
         }
         accountRepository.save(admin) ;
         admin.add(admin);
-        return "redirect:/adminDashboard";
+        return "redirect:/dashboardAdmin";
     }
 }
