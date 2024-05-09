@@ -7,7 +7,7 @@ Controllers, entities, repositories, and service. Controllers handle the data be
 Getting Started
 Dependencies
 Ensure you have the following prerequisites before installing the program:
-* IntelliJ IDEA (link to download)
+* IntelliJ IDEA https://www.jetbrains.com/idea/ (link to download)
 Installing
 * Download the program from the GitHub repository.
 * Clone or download the repository to your local machine.
