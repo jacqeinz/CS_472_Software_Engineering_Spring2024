@@ -38,9 +38,13 @@ INSTALLATION INSTRUCTIONS
 4. [OPTIONAL] To adjust the value of the JVM heap size, create a file idea.vmoptions (or idea64.vmoptions if using a 64-bit JDK) in the configuration directory and set the -Xms and -Xmx parameters. To see how to do this, you can reference the vmoptions file under "{installation home}/bin" as a model, but do not modify it, add your options to the new file.
 
 
-   [OPTIONAL] Change the location of the "config" and "system" directories
+ 5.  [OPTIONAL] Change the location of the "config" and "system" directories
 
+ 6.- [Optional] To obtain jacoco coverage testing, on the left hand bar in intellij, click on the 'm' icon for maven and select clean, test,  open the dependencies folder, select jacoco and select jacoco report. A screenshot has been included demonstrating how these option looks within intellij 
 
+![image](https://github.com/jacqeinz/CS_472_Software_Engineering_Spring2024/assets/111589915/245e487b-175a-4149-a246-d6bfb4b37e3b)
+
+ 
 ==============================================================================
 * Import the project into IntelliJ IDEA.
 * Build and run the project using the IDE's built-in tools.
